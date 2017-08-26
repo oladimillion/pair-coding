@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Session</title>
+	<link rel="stylesheet" href="dist/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" media="only screen and (min-width: 320px) and (max-width: 600px)" href="dist/css/small.css">
+	<link rel="stylesheet" media="only screen and (min-width: 601px) and (max-width: 900px)" href="dist/css/medium.css">
+	<link rel="stylesheet" media="only screen and (min-width: 901px) and (max-width: 1200px)" href="dist/css/large.css">
+	<link rel="stylesheet" media="only screen and (min-width: 1201px)" href="dist/css/xx-large.css">
+	<link rel="stylesheet" href="dist/css/session.css">
+
+	<link rel="stylesheet" href="dist/js/editor/lib/codemirror.css">
+	<link rel="stylesheet" href="dist/js/editor/lib/foldgutter.css">
+	<link rel="stylesheet" href="dist/js/editor/lib/dialog.css">
+	<link rel="stylesheet" href="dist/js/editor/lib/monokai.css">
+	<link rel="stylesheet" href="dist/js/editor/lib/codemirror.css">
+
+
+
+	<style type="text/css">
+		.CodeMirror {
+			border-top: 1px solid #eee;
+			border-bottom: 1px solid #eee;
+			border-radius: 0;
+			line-height: 1.3;
+			height: inherit;
+			width: 100%;
+			background-color: #ffffff;
+		}
+
+		.CodeMirror-linenumbers {
+			padding: 0;
+		}
+
+		#editor {
+			display: none;
+		}
+	</style>
+
+</head>
+
+<body>
+	<main>
+		<nav class="nav-bar">
+
+			<div class="nav-div">
+
+				<div class="settings">
+					<a id="username" href="#">oladimillion <span class="glyphicon glyphicon-menu-down"></span></a>
+				</div>
+
+			</div>
+
+		</nav>
+		<!-- end of navigation bar -->
+
+
+		<aside class="editor-session">
+			<div class="control-btn">test</div>
+			<textarea id="editor" name="editor" data-editor="markdown"></textarea>
+
+		</aside>
+		<!-- end of editor-session -->
+
+		<aside class="chat-session">
+
+
+		</aside>
+		<!-- end of chat-session -->
+
+	</main>
+
+
+	<!-- editor-js -->
+	<script src="dist/js/editor/jquery-3.2.0.min.js"></script>
+	<script src="dist/js/editor/lib/codemirror.js"></script>
+	<script src="dist/js/editor/lib/searchcursor.js"></script>
+	<script src="dist/js/editor/lib/search.js"></script>
+	<script src="dist/js/editor/lib/dialog.js"></script>
+	<script src="dist/js/editor/lib/matchbrackets.js"></script>
+	<script src="dist/js/editor/lib/closebrackets.js"></script>
+	<script src="dist/js/editor/lib/comment.js"></script>
+	<script src="dist/js/editor/lib/hardwrap.js"></script>
+	<script src="dist/js/editor/lib/foldcode.js"></script>
+	<script src="dist/js/editor/lib/brace-fold.js"></script>
+	<script src="dist/js/editor/lib/javascript.js"></script>
+	<script src="dist/js/editor/lib/sublime.js"></script>
+
+	<!-- <script src="dist/js/editor/extensions/editor.js"></script> -->
+
+	<script src="bundle.js"></script>
+</body>
+
+</html>

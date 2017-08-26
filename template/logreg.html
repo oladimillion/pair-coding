@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="dist/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/small.css">
+    <link rel="stylesheet" href="dist/css/medium.css">
+    <link rel="stylesheet" href="dist/css/large.css">
+    <link rel="stylesheet" href="dist/css/xx-large.css">
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="top">
+        <div class="login-form">
+          <div class="small">PAIR-CODING</div>
+          <form action="" method="POST">
+            <div class="login">
+              <div class="">
+                <label for="username">Username:</label>
+                <input class="" type="text" name="username" placeholder="Enter your username" required>
+              </div>
+              <div class="">
+                <label for="password">Password:</label>
+                <input class="" type="password" name="password" placeholder="Enter your password" required>
+              </div>
+              <div class="last-div">
+                <a class="" href="#">Forgot Password?</a>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a id="small" href="#">Forgot Password?</a>
+
+               <!--  <div class="status login-status-error error">
+                  All fields are required,
+                  All fields are required,
+                  All fields are required,
+                </div> -->
+                 <div class="status login-status-success success">
+                  Authentication successful, Welcome!
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end of login-form -->
+      </div>
+      <!-- end of top -->
+      <div class="bottom">
+        <div class="bottom-div">
+          <div class="info">
+            <h1>WELCOME TO PAIR-CODING</h1>
+            <div>PAIR-CODING makes
+              <br> pair programming among
+              <br> friends and colleagues possible.
+            </div>
+          </div>
+          <!-- end of info -->
+          <div class="reg-form">
+            <div class="title">
+              No account yet?
+              <br> Register now
+            </div>
+            <form action="" method="POST">
+              <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" placeholder="Enter your username" required>
+              </div>
+              <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+              </div>
+              <div>
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" placeholder="Enter phone number" required>
+              </div>
+              <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+              </div>
+              <div>
+                <label for="cpassoword">Confirm Password:</label>
+                <input type="password" name="cpassword" placeholder="Confirm your password" required>
+              </div>
+              <button type="submit" class="btn btn-info">Sign Up</button>
+            </form>
+
+            <!-- <div class="status reg-status-success success">
+                  Registration successful, Process to login
+            </div> -->
+            <div class="status reg-status-error error">
+                  Email is required,
+                  Username is required,
+                  phone is required,
+                  password is required,
+            </div>
+
+          </div>
+          <!-- end of reg-form -->
+        </div>
+        <!-- end of bottom-div -->
+      </div>
+      <!-- end of bottom -->
+    </div>
+    <!-- end of desktop -->
+    <footer>
+      Copyright © 2017 Oladimeji Akande
+    </footer>
+    <script type="text/javascript" src="../../../client/dist/js/bundle.js"></script>
+  </body>
+
+</html>

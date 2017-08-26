@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {{>head}}
+        <title>Pair Programming</title>
+    </head>
+    <body>
+        <script src="js/jquery-3.2.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/socket.io.js"></script>
+        <script src="js/scriptui.js"></script>
+        <script src="js/angular.js"></script>
+
+       
+        {{!--editor plus chat--}}
+        <script src="lib/codemirror.js"></script>
+        <script src="lib/searchcursor.js"></script>
+        <script src="lib/search.js"></script>
+        <script src="lib/dialog.js"></script>
+        <script src="lib/matchbrackets.js"></script>
+        <script src="lib/closebrackets.js"></script>
+        <script src="lib/comment.js"></script>
+        <script src="lib/hardwrap.js"></script>
+        <script src="lib/foldcode.js"></script>
+        <script src="lib/brace-fold.js"></script>
+        <script src="lib/javascript.js"></script>
+        <script src="lib/sublime.js"></script>
+        <script src="js/session.js"></script>
+
+        {{!--handles login and registration--}}
+
+        <script src="js/core.js"></script>
+
+
+         {{!--general room chat--}}
+        <script src="js/chat.js"></script>
+
+        <div class="container-fluid">
+            <div class="" style="margin-top: 50px">
+            {{{body}}}
+        </div>
+    </body>
+    <!--js-->
+</html>

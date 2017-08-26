@@ -1,0 +1,48 @@
+<div class="fixed col-lg-12 col-md-12 col-sm-12 col-xs-12 header" style="padding-bottom: 10px; color: white">
+     <div class="justify" style="margin-left: 10px; margin-right: 10px"> 
+         <h2>Pair Programming Session</h2>  
+         <div class="right" style="margin-top: 20px">
+             {{!--<a class="btn btn-primary" href="/home"><span class="glyphicon glyphicon-home"></span>&nbsp;HOME</a>--}}
+             <div class="dropdown">
+                <a href="/home" class="btn btn-color" style="border-right: 1px solid white;"><span class="glyphicon glyphicon-home"></span>&nbsp;  Home</a>
+                <a href="/settings" style="border-left: 1px solid white;" class="btn btn-color dropdown-toggle" data-toggle="dropdown" data-target="dropdown-menu"><span class="glyphicon glyphicon-cog "></span>&nbsp;  SETTINGS  &nbsp;<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/profile">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a id="logout"  href="#">Sign out</a></li>
+                </ul>
+            </div>
+         </div>
+     </div> 
+</div>
+
+
+<section class="row">
+        <div class="" style="margin-top: 26px;">
+        <aside class="col-lg-7 col-md-7">
+            <form name="session" action="" class="form-horizontal" role="form" method="">
+                <textarea id="editor" name="editor" data-editor="markdown" rows="20"></textarea>
+                {{!--<div id="editor" name="editor" data-editor="markdown" rows="20"></div>--}}
+                <br>
+                <p class="right" style="margin-right:0px;"><button id="save-code" type="button" class="btn btn-success">Save</button></p>
+            </form>
+        </aside>
+       
+         <aside class="col-lg-5 col-md-5">
+            <p id="sess-message-list" class="message-list">
+            </p>
+            <p>
+                <div class="">
+                    <div class="input-group">
+                        <input type="text" class="form-control message-input" placeholder="Type in your message and press Enter" id="sess-message-input">
+                        <span class="input-group-btn">
+                        <button id="sess-send-button" class="btn btn-success send-button" type="button" >Send</button>
+                        </span>
+                    </div>
+                </div>
+            </p>
+        </aside>
+        </div>    
+</section>
+<section class="col-md-6"><span id="session-status"  class="col-md-12 status center {{state}}">{{message}}</span></section>
+<section class="col-md-6"><span id="session-chat-status"  class="col-md-12 status center {{state}}">{{message}}</span></section>

@@ -1,0 +1,36 @@
+<div class="fixed col-lg-12 col-md-12 col-sm-12 col-xs-12 header" style="padding-bottom: 10px; color: white">
+     <div class="justify" style="margin-left: 10px; margin-right: 10px"> 
+         <h2>General Chat Room</h2>  
+         <div class="right" style="margin-top: 20px">
+             {{!--<a class="btn btn-primary" href="/home"><span class="glyphicon glyphicon-home"></span>&nbsp;HOME</a>--}}
+             <div class="btn-group dropdown">
+                <a href="/home" style="border-right: 1px solid white;" class="btn btn-color"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a>
+                <a href="/settings" style="border-left: 1px solid white;" class="btn btn-color dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog "></span>&nbsp;  SETTINGS  &nbsp;<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/profile">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a id="logout"  href="#">Sign out</a></li>
+                </ul>
+            </div>
+         </div>
+     </div> 
+ </div>
+
+ <section class="center" style="padding-top: 27px;">
+     <div class="col-md-11">
+            <p id="gen-message-list" class="message-list">
+            </p>
+            <p>
+                <div class="">
+                    <div class="input-group">
+                        <input type="text" class="form-control message-input" placeholder="Type in your message and press Enter" id="gen-message-input">
+                        <span class="input-group-btn">
+                        <button id="gen-send-button" class="btn btn-success send-button" type="button" >Send</button>
+                        </span>
+                    </div>
+                </div>
+            </p>
+     </div>
+ </section>
+
+ 
