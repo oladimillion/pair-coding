@@ -6,11 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Welcome</title>
+
+  <link rel="stylesheet" href="dist/css/pages/common.css">
   <link rel="stylesheet" href="dist/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="dist/css/small.css">
-  <link rel="stylesheet" href="dist/css/medium.css">
-  <link rel="stylesheet" href="dist/css/large.css">
-  <link rel="stylesheet" href="dist/css/xx-large.css">
+
+  <!-- login-registration template css -->
+  <link rel="stylesheet" href="dist/css/pages/small.css">
+  <link rel="stylesheet" href="dist/css/pages/medium.css">
+  <link rel="stylesheet" href="dist/css/pages/large.css">
+  <link rel="stylesheet" href="dist/css/pages/xx-large.css">
+
+  <!-- session template css -->
+  <link rel="stylesheet" href="dist/css/pages/sm-session.css">
+  <link rel="stylesheet" href="dist/css/pages/session.css">
+
 </head>
 
 <body>
@@ -30,16 +39,22 @@
             </div>
             <div class="last-div">
               <a class="" href="#">Forgot Password?</a>
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button id="login" type="submit" class="btn btn-primary">Login</button>
               <a id="small" href="#">Forgot Password?</a>
 
-              <div class="forgot-password ">
+              <div class="forgot-password hidden">
 
                 <ul class="user-detail">
                   <li>Email: <br> <input type="text" name="" id="" placeholder="Enter your email"></li>
                   <li>Password: <br><input type="password" name="" id="" placeholder="Enter new password"></li>
-                  <li>Password Confirmation: <br><input type="password" name="" id="" placeholder="Re-enter your password"></li>
-                  <li><button class="save">Save</button></li>
+                  <li>Confirm Password: <br><input type="password" name="" id="" placeholder="Re-enter your password"></li>
+                  <li>
+                    <button class="save">Save</button>
+                  </li>
+                  <li>
+                    <!-- <span>Done</span> -->
+                    <span>Passwords don't match</span>
+                  </li>
                 </ul>
               </div>
 
@@ -65,7 +80,7 @@
           <h1>WELCOME TO PAIR-CODING</h1>
           <div>PAIR-CODING makes
             <br> pair programming among
-            <br> friends and colleagues possible.
+            <br> friends and colleagues easy.
           </div>
         </div>
         <!-- end of info -->
@@ -116,7 +131,7 @@
   <footer>
     Copyright © 2017 Oladimeji Akande
   </footer>
-  <script src="dist/js/editor/jquery-3.2.0.min.js"></script>
+  <!-- <script src="dist/js/editor/jquery-3.2.0.min.js"></script> -->
   <script type="text/javascript" src="bundle.js"></script>
 </body>
 

@@ -6,19 +6,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Session</title>
-	<link rel="stylesheet" href="dist/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" media="only screen and (min-width: 320px) and (max-width: 600px)" href="dist/css/small.css">
-	<link rel="stylesheet" media="only screen and (min-width: 601px) and (max-width: 900px)" href="dist/css/medium.css">
-	<link rel="stylesheet" media="only screen and (min-width: 901px) and (max-width: 1200px)" href="dist/css/large.css">
-	<link rel="stylesheet" media="only screen and (min-width: 1201px)" href="dist/css/xx-large.css">
-	<link rel="stylesheet" href="dist/css/session.css">
-	<link rel="stylesheet" href="dist/css/sm-session.css">
 
-	<link rel="stylesheet" href="dist/js/editor/lib/codemirror.css">
-	<link rel="stylesheet" href="dist/js/editor/lib/foldgutter.css">
-	<link rel="stylesheet" href="dist/js/editor/lib/dialog.css">
-	<link rel="stylesheet" href="dist/js/editor/lib/monokai.css">
-	<link rel="stylesheet" href="dist/js/editor/lib/codemirror.css">
+
+	<link rel="stylesheet" href="dist/css/pages/common.css">
+	<link rel="stylesheet" href="dist/bootstrap/bootstrap.min.css">
+
+	<!-- login-registration template css -->
+	<link rel="stylesheet" href="dist/css/pages/small.css">
+	<link rel="stylesheet" href="dist/css/pages/medium.css">
+	<link rel="stylesheet" href="dist/css/pages/large.css">
+	<link rel="stylesheet" href="dist/css/pages/xx-large.css">
+
+	<!-- session template css -->
+	<link rel="stylesheet" href="dist/css/pages/sm-session.css">
+	<link rel="stylesheet" href="dist/css/pages/session.css">
+
+	<!-- home template css -->
+	<link rel="stylesheet" href="dist/css/pages/home.css">
+
+	<!-- codemirror css -->
+	<link rel="stylesheet" href="dist/css/codemirror/codemirror.css">
+	<link rel="stylesheet" href="dist/css/codemirror/foldgutter.css">
+	<link rel="stylesheet" href="dist/css/codemirror/dialog.css">
+	<link rel="stylesheet" href="dist/css/codemirror/monokai.css">
 
 
 
@@ -45,8 +55,12 @@
 	<main>
 		<nav class="nav-bar clearfix">
 
+			<div class="status session-status">
+				Invalid operation
+			</div>
+
 			<div class="settings">
-				<a id="username" href="#">oladimillion <span class="glyphicon glyphicon-menu-down"></span></a>
+				<a id="" href="#"><span class="glyphicon glyphicon-cog"></span> Settings </a>
 				<ul class="profile hidden">
 					<li>Profile</li>
 					<li>Log out</li>
@@ -175,23 +189,22 @@
 	</main>
 
 
-	<!-- editor-js -->
-	<script src="dist/js/editor/jquery-3.2.0.min.js"></script>
+	<!-- codemirror js -->
+	<!-- <script src="dist/js/editor/jquery-3.2.0.min.js"></script> -->
 	<!-- <script src="dist/js/editor/socket.io/socket.io.js"></script> -->
-	<script src="dist/js/editor/lib/codemirror.js"></script>
-	<script src="dist/js/editor/lib/searchcursor.js"></script>
-	<script src="dist/js/editor/lib/search.js"></script>
-	<script src="dist/js/editor/lib/dialog.js"></script>
-	<script src="dist/js/editor/lib/matchbrackets.js"></script>
-	<script src="dist/js/editor/lib/closebrackets.js"></script>
-	<script src="dist/js/editor/lib/comment.js"></script>
-	<script src="dist/js/editor/lib/hardwrap.js"></script>
-	<script src="dist/js/editor/lib/foldcode.js"></script>
-	<script src="dist/js/editor/lib/brace-fold.js"></script>
-	<script src="dist/js/editor/lib/javascript.js"></script>
-	<script src="dist/js/editor/lib/sublime.js"></script>
+	<script src="dist/js/codemirror/lib/codemirror.js"></script>
+	<script src="dist/js/codemirror/lib/searchcursor.js"></script>
+	<script src="dist/js/codemirror/lib/search.js"></script>
+	<script src="dist/js/codemirror/lib/dialog.js"></script>
+	<script src="dist/js/codemirror/lib/matchbrackets.js"></script>
+	<script src="dist/js/codemirror/lib/closebrackets.js"></script>
+	<script src="dist/js/codemirror/lib/comment.js"></script>
+	<script src="dist/js/codemirror/lib/hardwrap.js"></script>
+	<script src="dist/js/codemirror/lib/foldcode.js"></script>
+	<script src="dist/js/codemirror/lib/brace-fold.js"></script>
+	<script src="dist/js/codemirror/lib/javascript.js"></script>
+	<script src="dist/js/codemirror/lib/sublime.js"></script>
 
-	<!-- <script src="dist/js/editor/extensions/editor.js"></script> -->
 
 	<script src="bundle.js"></script>
 </body>
