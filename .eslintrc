@@ -1,8 +1,0 @@
-{
-    "extends": ["airbnb", "rallycoding"],
-    "max-len": [1, 80, 2],
-    "installedESLint": true,
-    "plugins": [
-        "react"
-    ]
-}
