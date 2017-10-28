@@ -1,0 +1,412 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #E1E1E1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 63%;
+}
+
+.wrapper {
+    margin: 5px auto;
+    width: 90%;
+    min-width: 1000px;
+    background: #fff;
+    font-size: 1.6em;
+    background: linear-gradient(#fff, #5D8AA8);
+    height: 600px;
+}
+
+#login {
+    width: 100%;
+    min-width: 600px;
+    border: 1px solid lightgray;
+    height: 100px;
+    padding: 20px 60px 20px 20px;
+    color: #fff;
+}
+
+#login div {
+    float: left;
+    width: 10%;
+}
+
+#login table {
+    float: right;
+    width: 400px;
+}
+
+#login table td {
+    width: 50%;
+    padding: 5px;
+    padding-bottom: 1px;
+    font-size: 14px;
+}
+
+#login table input {
+    padding-left: 4px;
+    width: 140px;
+    height: 27px;
+    font-size: 13px;
+    border: 0.5px solid black;
+}
+
+#reg-form {
+    width: 100%;
+    min-width: 800px;
+    min-height: 100%;
+    padding: 0 40px;
+    font-size: 15px;
+}
+
+#registration {
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    float: right;
+    width: 480px;
+}
+
+#registration input {
+    width: 200px;
+    height: 27px;
+    padding-left: 8px;
+    font-size: 15px;
+}
+
+#info {
+    width: 40%;
+    padding: 30px;
+    float: left;
+}
+
+#info div {
+    font-size: 20px;
+}
+
+#info h1 {
+    font-size: 40px;
+}
+
+fieldset {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px;
+}
+
+legend {
+    font-weight: bold;
+}
+
+#registration label,
+#registration input {
+    margin: 1px;
+    margin-bottom: 13px;
+}
+
+#registration label {
+    width: 30%;
+    float: left;
+}
+
+#registration input {
+    width: 65%;
+    float: left;
+}
+
+#registration button {
+    float: right;
+    margin-right: 24px;
+}
+
+a {
+    text-decoration: none;
+    color: #9CB4CC;
+}
+
+tr a:hover {
+    text-decoration: underline;
+}
+
+
+/*Group List*/
+
+.title {
+    width: 100%;
+    background: #3B5998;
+    padding: 10px;
+}
+
+.title h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 2em;
+}
+
+#message-group {
+    width: 100%;
+    /* height: 440px; */
+    overflow: auto;
+    overflow-x: hidden;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    /* background: linear-gradient(#fff, #5D8AA8); */
+}
+
+#message-group a,
+#message-group:hover a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.message {
+    width: inherit;
+    word-break: keep-all;
+    padding: 10px;
+    background-color: #19404A;
+    list-style-type: none;
+    border-radius: 2px;
+    margin-bottom: 5px;
+}
+
+.message:hover {
+    width: inherit;
+    word-break: keep-all;
+    padding: 10px;
+    background-color: #4B4B4B;
+    list-style-type: none;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.mess-form {
+    padding: 20px 200px;
+    /* background: linear-gradient(#fff, #5D8AA8) */
+}
+
+.mess-form fieldset {
+    padding: 30px;
+}
+
+.mess-form button {
+    float: right;
+}
+
+.form-control {
+    width: 100px;
+    float: right;
+    padding: 5px;
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.form-control option {
+    padding: 8px;
+    background-color: royalblue;
+    color: white;
+    border-radius: 2px;
+}
+
+textarea {
+    width: 100%;
+    height: 300px;
+    padding: 20px 40px;
+    border-radius: 5px;
+    background-color: #FFF;
+}
+
+li {
+    list-style: none;
+}
+
+.top-item {
+    width: 100%;
+    padding-top: 5px;
+}
+
+.top-item li {
+    display: inline-block;
+    margin: 1px;
+    padding: 10px;
+}
+
+.top-item a {
+    color: #4A9FF4;
+}
+
+.top-item li:hover {
+    background-color: gray;
+}
+
+.top-item li:hover a {
+    color: #fff;
+}
+
+.top-item ul {
+    width: 34%;
+    float: right;
+}
+
+.new-group {
+    width: 36%;
+    margin: 10px;
+    float: right;
+}
+
+.new-group a {
+    margin: 5px;
+    padding: 10px;
+    color: #4A9FF4;
+}
+
+.new-group a:hover {
+    background-color: gray;
+    color: #fff;
+}
+
+.new-group input {
+    padding-left: 5px;
+    width: 230px;
+    height: 27px;
+    font-size: 13px;
+    border: 0.5px solid black;
+}
+
+.message-list {
+    width: 100%;
+    height: 440px;
+    overflow: auto;
+    overflow-x: hidden;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 5px 0;
+    margin-bottom: 20px;
+    /* background: linear-gradient(#fff, #5D8AA8); */
+}
+
+.message-list div {
+    max-width: inherit;
+    word-break: keep-all;
+    padding: 4px;
+    background-color: #19404A;
+    list-style-type: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    margin-bottom: 5px;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.list-users {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.list-users div {
+    display: inline-block;
+    padding: 10px;
+    background-color: #19404A;
+    list-style-type: none;
+    border-radius: 2px;
+    margin-bottom: 5px;
+}
+
+#user-list {
+    width: 100%;
+    height: 440px;
+    overflow: auto;
+    overflow-x: hidden;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#user-list,
+#user-list:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.body form {
+    /* background: linear-gradient(#fff, #5D8AA8); */
+    position: relative;
+    height: 480px;
+}
+
+.user {
+    padding: 10px;
+    background-color: #19404A;
+    list-style-type: none;
+    border-radius: 2px;
+    margin-bottom: 5px;
+}
+
+.user li {
+    display: inline-block;
+    padding-left: 20px
+}
+
+.user li:hover input {
+    cursor: pointer;
+}
+
+.body .btn {
+    border: 0.5px solid cornflowerblue;
+    margin-left: 20px;
+    margin-right: 40px;
+}
+
+.button {
+    width: auto;
+    height: auto;
+    font: 15px bold;
+    border-radius: 3px;
+    padding: 6px;
+}
+
+
+/* .button-primary {
+    color: white;
+    background-color: cornflowerblue;
+    border: 0.5px solid cornflowerblue;
+}
+
+.button-primary:hover {
+    padding: 6px;
+    color: lightgray;
+    background-color: royalblue;
+} */
+
+.button-primary {
+    color: white;
+    background-color: cornflowerblue;
+    border: 0.5px solid #fff;
+}
+
+.button-primary:hover {
+    padding: 6px;
+    color: lightgray;
+    background-color: royalblue;
+    cursor: pointer;
+}
+
+.add-user {
+    border: none;
+}

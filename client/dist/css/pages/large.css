@@ -1,0 +1,41 @@
+@media only screen and (min-width: 901px) and (max-width: 1200px) {
+	.wrapper {
+		height: 100vh;
+		width: 100%;
+	}
+	/*
+	 * login and registration page styles begin here
+	 */
+	.top {
+		min-width: 900px;
+	}
+	.top-inner {
+		width: 900px;
+	}
+	.login{
+		width: 522px;
+	}
+	.login label {
+		font-size: 13px;
+	}
+	.login button {
+		margin-left: 79px;
+	}
+	.bottom-inner {
+		width: 900px;
+	}
+	.info {
+		width: 440px;
+	}
+	.reg {
+		width: 440px;
+	}
+	.reg input {
+		width: 220px;
+	}
+	/*positioning registration status*/
+	.reg .reg-status-error, .reg .reg-status-success {
+		margin-top: 278px;
+	}
+	
+}
