@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-
+//connecting to database
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://oladimeji:1234@127.0.0.1:27017/pair', function(err) {
+mongoose.connect(process.env.SERVER_MONGODB_URI || process.env.LOCAL_MONGODB_URI, function(err) {
 	if (err) {
 		console.log('Not connected to db: ', err);
 	} else {

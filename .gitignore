@@ -2,8 +2,6 @@ node_modules/
 
 .vscode/
 
-client/
-
 webpack.config.js
 
 .eslintrc.json
@@ -23,3 +21,11 @@ ignore.js
 junk/
 
 .swp
+
+.env
+
+.ignore.js.un~
+
+ignore.js~
+
+test.txt
