@@ -5,13 +5,20 @@
 
 ### This application allows people to 
   - create an account, 
+
   - recover lost password via email, 
+
   - create session and save session
+
   - create temporary session by given the session custom id:
+
   *if app is running locally, create session with http://localhost:8000/session/my_custom_session_id*
   *or http://www.mywebsite.com/session/my_custom_session_id*
+
   - invite people to session,
+
   - chat in real time in the course of the session, 
+
   - share saved session with friends.
 
 ## To run the app locally
@@ -30,11 +37,11 @@
   5. enter `http://localhost:8000` in your browser's address bar to use the app
 
 ## This app is live on server
-  visit [www.mywebsite.com] 
+  visit [ www.mywebsite.com ] 
 
-#Authors
-  ** Oladimeji Akande ** 
+## Authors
+  **Oladimeji Akande** 
 
-#License
+## License
   None.
 
