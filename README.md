@@ -12,14 +12,14 @@
 
   - create temporary session by given the session custom id:
 
-  *if app is running locally, create session with http://localhost:8000/session/my_custom_session_id*
-  *or http://www.mywebsite.com/session/my_custom_session_id*
-
   - invite people to session,
 
   - chat in real time in the course of the session, 
 
   - share saved session with friends.
+
+  **NOTE:** *if app is running locally, custom session with http://localhost:8000/session/my_custom_session_id else http://www.mywebsite.com/session/my_custom_session_id*
+ 
 
 ## To run the app locally
   1. Clone the repository:
