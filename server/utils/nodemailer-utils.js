@@ -17,7 +17,7 @@ let transporter = nodemailer.createTransport({
 });
 
 
-function NodeMailer(to, subject, text, html, next)
+function NodeMailer(to, subject, text, html, callback)
 {
   // setup email data
   let mailOptions = {
@@ -32,12 +32,12 @@ function NodeMailer(to, subject, text, html, next)
   return transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log("NodeMailer:ERROR: ", error);
-      return next(error)
+      return callback(error)
     }
 
     if(info){
       console.log('Message sent: %s', info.messageId);
-      return next();
+      return callback();
     }
   });
 }

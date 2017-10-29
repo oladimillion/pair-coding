@@ -124,6 +124,10 @@ class Session extends Component{
     }
   }
 
+  componentDidMount(){
+    document.title = "Pair Coding - Session"
+  }
+
   componentWillReceiveProps(newProps) { 
     // update state with incoming data
     let { content, title, description } = newProps.code;

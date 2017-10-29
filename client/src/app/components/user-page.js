@@ -34,6 +34,10 @@ class User extends Component{
     }
   }
 
+  componentDidMount(){
+    document.title = "Pair Coding - Welcome"
+  }
+
   redirect(){
     // redirects to home after successful login
     this.props.history.replace("/home", null);

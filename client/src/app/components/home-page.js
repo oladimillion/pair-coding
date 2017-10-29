@@ -70,6 +70,10 @@ class Home extends Component {
 
   }
 
+  componentDidMount(){
+    document.title = "Pair Coding - Home"
+  }
+
   componentWillReceiveProps(newProps){
     // shows session items
     this.updateFilterSession(newProps.sessions);

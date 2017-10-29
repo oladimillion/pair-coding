@@ -1,10 +1,9 @@
 const express = require('express'),
 	app = express(),
-	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	path = require('path'),
-	http = require('http').Server(app),
-	session = require('express-session');
+	http = require('http').Server(app);
+
 require('dotenv').config();
 
 app.disable('x-powered-by');
@@ -19,8 +18,10 @@ app.use("/session", express.static(path.join(__dirname,  './../client')));
 app.use("/password-reset", express.static(path.join(__dirname,  './../client')));
 app.use(express.static(path.join(__dirname + './../template')));
 
-if(process.env.NODE_ENV != "production")
+if(process.env.NODE_ENV != "production"){
+	const morgan = require('morgan');
   app.use(morgan('dev'));
+}
 
 //load all routes
 app.use(require('./routes/index'));
