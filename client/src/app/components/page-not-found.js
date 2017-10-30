@@ -1,6 +1,7 @@
 import React from "react";
 
 const PageNotFound = () => {
+  document.title = "Pair Coding - PageNotFound";
   return (
     <div class="main404">
       <div class="content404">

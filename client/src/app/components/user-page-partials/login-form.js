@@ -124,7 +124,7 @@ class LoginForm extends Component {
             Login
           </button>
           <a 
-            id="small" href="#"
+            id="small" 
             onClick = { ()=>toggleResetPassword() } 
           >Forgot Password?</a>
         </div>

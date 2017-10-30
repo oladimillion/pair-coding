@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 //connecting to database
 mongoose.Promise = global.Promise;
 
-// server uri
-const S_URI = process.env.SERVER_MONGODB_URI;
-// local uri
-const L_URI = process.env.LOCAL_MONGODB_URI;
+let URI = null;
 
-mongoose.connect(L_URI);
+if(process.env.NODE_ENV != "production")
+  URI = process.env.LOCAL_MONGODB_URI;
+else
+  URI = process.env.SERVER_MONGODB_URI;
+
+mongoose.connect(URI);
 
 // initialising mongoose connection
 const db = mongoose.connection;

@@ -122,10 +122,13 @@ class MainPasswordReset extends Component {
           <li
             disabled = { this.state.isLoading }
           > 
-            <span 
-              onClick = { ()=>this.props.toggleResetPassword() }
-              class="glyphicon glyphicon-remove"
-            ></span>
+            <span>
+              <span></span>
+              <span 
+                onClick = { ()=>this.props.toggleResetPassword() }
+                class="glyphicon glyphicon-remove"
+              ></span>
+            </span>
           </li>
 
           <li class="pop-up-info">

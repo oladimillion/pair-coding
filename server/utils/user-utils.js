@@ -46,7 +46,7 @@ function sendMail(res, email, token)
     subject: "Reset your Pair-Coding password",
     text: `Someone (hopefully you) has requested a password reset for your Heroku account. 
            Follow the link below to set a new password: 
-           http://localhost:8000/password-reset/${token}
+           https://pair-coding.herokuapp.com/password-reset/${token}
            If you don't wish to reset your password, disregard this email and no 
            action will be taken.`,
     html: `
@@ -64,7 +64,7 @@ function sendMail(res, email, token)
            <body>
              <p>Someone (hopefully you) has requested a password reset for your Pair-Coding account. 
                 Follow the link below to set a new password: </p> <br/>
-             <a href="http://localhost:8000/password-reset/${token}"> <strong> http://localhost:8000/password-reset/${token}</strong></a><br/>	
+             <a href="https://pair-coding.herokuapp.com/password-reset/${token}"> <strong> https://pair-coding.herokuapp.com/password-reset/${token}</strong></a><br/>	
              <p>If you don't wish to reset your password, disregard this email and no 
                 action will be taken.</p>
            </body>

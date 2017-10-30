@@ -53,7 +53,7 @@ function isValidLoginData(data){
   let {username, password} = data;
 
   if(!testUsername(username)){
-    return "Username must be number, alphabet or alphanumeric between 2 and 20 in length";
+    return "Username is invalid";
   }
 
   if(!testPassword(password)){
@@ -72,7 +72,7 @@ function isValidRegData(data){
   let { username, email, password, cpassword, phone } = data;
 
   if(!testUsername(username)){
-    return "Username must be number, alphabet or alphanumeric between 2 and 20 in length";
+    return "Username may contain number or alphabet or both, between 2 and 20 in length";
   }
 
   if(!testEmail(email)){
@@ -80,7 +80,7 @@ function isValidRegData(data){
   }
 
   if(!testPhone(phone)){
-    return "Phone number must be digits only between 4 and 20 in length";
+    return "Phone number must be digits only, between 4 and 20 in length";
   }
 
   if(!testPassword(password)){
@@ -137,7 +137,7 @@ function isValidProfileData(data){
   }
 
   if(!testUsername(username)){
-    return "Username must be number, alphabet or alphanumeric between 2 and 20 in length";
+    return "Username may contain number or alphabet or both, between 2 and 20 in length";
   }
 
   if(!testEmail(email)){
@@ -145,7 +145,7 @@ function isValidProfileData(data){
   }
 
   if(!testPhone(phone)){
-    return "Phone number must be digits only between 4 and 20 in length";
+    return "Phone number must be digits only, between 4 and 20 in length";
   }
 
   if(password){

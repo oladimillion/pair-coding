@@ -261,7 +261,7 @@ section.session-items ul li span.delete:hover {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 800px) {
   section.session-items {
     margin-top: 25px;
   }

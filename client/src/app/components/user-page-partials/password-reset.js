@@ -91,11 +91,14 @@ class PasswordReset extends Component {
         <ul class="pop-up-detail">
 
           <li> 
-            <span 
-              disabled = {isLoading }
-              onClick = { ()=>this.props.toggleResetPassword() }
-              class="glyphicon glyphicon-remove"
-            ></span>
+            <span>
+              <span></span>
+              <span 
+                disabled = {isLoading }
+                onClick = { ()=>this.props.toggleResetPassword() }
+                class="glyphicon glyphicon-remove"
+              ></span>
+            </span>
           </li>
 
           <li class="pop-up-info">

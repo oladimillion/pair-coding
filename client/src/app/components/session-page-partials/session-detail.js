@@ -81,6 +81,11 @@ class SessionDetail extends Component {
       return;
     }
 
+    // disabling Update button
+    this.setState({
+      isLoading: true
+    })
+
     // saves session detail update to server
     this.props.UpdateSessionDetailRequest({id, title, description})
       .then(({data})=>{
@@ -88,6 +93,7 @@ class SessionDetail extends Component {
         this.setState({
           success,
           message,
+          isLoading: false,
           isEditing: false});
         // saves session detail update locally
         this.props.saveSessionDetail({title, description})
@@ -96,7 +102,8 @@ class SessionDetail extends Component {
         let {  success, message  } = response.data;
         this.setState({
           success,
-          message
+          message,
+          isLoading: false,
         })
       })
 
@@ -139,7 +146,7 @@ class SessionDetail extends Component {
               ></span>
             </span>
           </li>
-          
+
           <li class="pop-up-info bold-info">
             Session Detail
           </li>
@@ -171,7 +178,7 @@ class SessionDetail extends Component {
 
           <li>
             <button 
-              disabled = { isLoading || !isEditing }
+              disabled = { isLoading  || !isEditing}
               onClick = {this.onClick }
               class="btn btn-primary">
               Update Detail
@@ -199,7 +206,7 @@ SessionDetail.propTypes = {
   detail: PropTypes.object.isRequired,
 } 
 
-  
+
 export default connect(null, { 
   UpdateSessionDetailRequest,
 })(SessionDetail);

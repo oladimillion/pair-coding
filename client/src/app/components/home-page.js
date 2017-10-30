@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { SetPosition } from "../actions/position-actions"
-import { DeleteSessionRequest } from "../actions/session-actions"
+import { DeleteSessionRequest, SetSessionInfo } from "../actions/session-actions"
 import { FetchAllSessionRequest } from "../actions/session-actions"
 import { SetLoginInfo, Logout } from "../actions/user-actions"
 import { MySort } from "../utils/my-sort";
@@ -90,6 +90,11 @@ class Home extends Component {
       return;
     }
     this.isDeleting = true;
+
+    this.props.SetSessionInfo({
+      success: true,
+      message: "Please wait..."
+    })
 
     // delete item id from server
     this.props.DeleteSessionRequest(id)
@@ -294,6 +299,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
+  SetSessionInfo: PropTypes.func.isRequired, 
   SetLoginInfo: PropTypes.func.isRequired,
   FetchAllSessionRequest: PropTypes.func.isRequired,
   SetPosition: PropTypes.func.isRequired,
@@ -317,6 +323,7 @@ function mapStateToProps(state){
 export default connect(mapStateToProps, {
   FetchAllSessionRequest,
   SetLoginInfo,
+  SetSessionInfo,
   DeleteSessionRequest,
   SetPosition,
   Logout

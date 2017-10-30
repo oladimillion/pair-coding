@@ -44,59 +44,57 @@ form a:hover {
 }
 
 .login {
-	width: 532px;
-	/* border: 1px solid black; */
-	padding-top: 8px;
-	margin: 0 0px 0 auto;
-	position: relative;
-}
-.login div:nth-child(1) {
-	display: inline-block;
+  width: 532px;
+  /* border: 1px solid black; */
+  padding-top: 8px;
+  margin: 0 0px 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
 }
 .login div:nth-child(2) {
-	display: inline-block;
-	margin-left: 20px;
+  margin-left: 5px;
 }
 .login div:nth-child(3) {
-	position: absolute;
-	bottom: 0;
-	right: 2px;
-	margin-bottom: -45px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: -45px;
 }
 .login label {
-	font-size: 14px;
-	color: white;
-	font-weight: 600;
-	margin-right: 1px;
+  font-size: 14px;
+  color: white;
+  font-weight: 600;
+  margin-right: 1px;
 }
 .login input {
   color: #233947;
-	font-size: 13px;
-	padding: 4.5px;
-	padding-left: 8px;
-	border: 1px solid #D5D5D5;
-	letter-spacing: 1px;
-	background: #ECECEC;
+  font-size: 13px;
+  padding: 4.5px;
+  padding-left: 8px;
+  border: 1px solid #D5D5D5;
+  letter-spacing: 1px;
+  background: #ECECEC;
 }
 .login input:focus {
   background: #fff;
 }
 .login input::placeholder {
-	color: #759FBB;
-	letter-spacing: 0.5px;
+  color: #759FBB;
+  letter-spacing: 0.5px;
 }
 .login button {
-	margin-left: 84px;
-	padding: 4px;
-	width: 65px;
-	font-size: 12px;
-	color: white;
-	background-color: #3B5998;
-	border: 0.5px solid #BBB;
+  margin-left: 84px;
+  padding: 4px;
+  width: 65px;
+  font-size: 12px;
+  color: white;
+  background-color: #3B5998;
+  border: 0.5px solid #BBB;
 }
 .login button:hover {
-	cursor: pointer;
-	background-color: cornflowerblue;
+  cursor: pointer;
+  background-color: cornflowerblue;
 }
 .pop-up {
   position: fixed;
@@ -111,7 +109,7 @@ form a:hover {
 .pop-up ul.pop-up-detail {
   width: 40%;
   max-width: 350px;
-  min-width: 270px;
+  min-width: 240px;
   padding: 10px;
   list-style: none;
   font-size: 13px;
@@ -128,9 +126,8 @@ form a:hover {
 }
 .pop-up ul.pop-up-detail li span {
   color: #4C7B9A;
-  display: inline-block;
-  margin-left: 40px;
-  margin-right: 40px;
+  display: flex;
+  justify-content: space-between;
 }
 .pop-up ul.pop-up-detail li span:hover {
   color: #ABC4D5;
@@ -150,8 +147,9 @@ form a:hover {
   font-weight: 600;
   margin-bottom: 5px;
 }
-.pop-up ul.pop-up-detail li:last-child{
+.pop-up ul.pop-up-detail li:last-child p {
   width: 100%;
+  margin-bottom: 0;
 }
 .pop-up ul.pop-up-detail li input, .pop-up ul.pop-up-detail li textarea {
   padding: 7px;
@@ -159,10 +157,10 @@ form a:hover {
   padding-right: 20px;
   font-size: 13px;
   text-align: left;
-	letter-spacing: 0.6px;
-	width: 100%;
-	border: 1px solid #D3D3D3;
-	background: #E3E3FD;
+  letter-spacing: 0.6px;
+  width: 100%;
+  border: 1px solid #D3D3D3;
+  background: #E3E3FD;
   border-radius: 3px;
   color: #385A70;
   resize: none;
@@ -171,8 +169,8 @@ form a:hover {
   background: #fff; 
 }
 .pop-up ul.pop-up-detail li input::placeholder, .pop-up ul.pop-up-detail li textarea::placeholder{
-	color: #7EA3BA;
-	letter-spacing: 0.5px;
+  color: #7EA3BA;
+  letter-spacing: 0.5px;
 }
 .pop-up ul.pop-up-detail li textarea::-webkit-scrollbar {
   width: 9px;
@@ -308,13 +306,13 @@ form a:hover {
   padding-left: 8px;
   border: 1px solid #D5D5D5;
   letter-spacing: 1px;
-	background: #ECECEC;
+  background: #ECECEC;
 }
 .reg input:focus {
   background: #fff;
 }
 .reg input::placeholder {
-	color: #759FBB;
+  color: #759FBB;
   letter-spacing: 0.5px;
 }
 /*positioning registration status*/

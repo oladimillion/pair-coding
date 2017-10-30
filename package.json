@@ -65,6 +65,6 @@
     "webpack-dev-server": "^2.6.1"
   },
   "author": "oladimeji akande",
-  "license": "ISC",
+  "license": "MIT",
   "keyword": "pair coding react"
 }

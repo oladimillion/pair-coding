@@ -18,7 +18,8 @@
 
   - share saved session with friends.
 
-  **NOTE:** *if app is running locally, custom session with http://localhost:8000/session/my_custom_session_id else http://www.mywebsite.com/session/my_custom_session_id*
+  **NOTE:** *if app is running locally, custom session with http://localhost:8000/session/my_custom_session_id 
+  else https://pair-coding.herokuapp.com/session/my_custom_session_id*
  
 
 ## To run the app locally
@@ -37,11 +38,11 @@
   5. enter `http://localhost:8000` in your browser's address bar to use the app
 
 ## This app is live on server
-  visit [ www.mywebsite.com ] 
+  visit [ https://pair-coding.herokuapp.com ] 
 
 ## Authors
   **Oladimeji Akande** 
 
 ## License
-  None.
+  MIT.
 

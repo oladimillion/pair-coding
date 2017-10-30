@@ -198,8 +198,8 @@ function updateSession(req, res) {
       });
 
     } else {
-      return res.status(201).json({
-        success: true,
+      return res.status(400).json({
+        success: false,
         message: "Not saved"
       });
     }
@@ -244,8 +244,8 @@ function updateSessionDetail(req, res) {
       });
 
     } else {
-      return res.status(201).json({
-        success: true,
+      return res.status(400).json({
+        success: false,
         message: "Not saved"
       });
     }
