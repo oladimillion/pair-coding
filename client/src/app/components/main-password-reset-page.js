@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { isValidResetPwData  } from "../../../../server/utils/validations"; 
 import { PasswordResetRequest,
   PasswordResetTokenRequest} from "../actions/user-actions" 
+import { PreventAction } from "../utils/prevent-action-util";
 
 class MainPasswordReset extends Component {
 
@@ -19,6 +20,8 @@ class MainPasswordReset extends Component {
       email: "",
       isLoading: false, // is page loading?
     }
+
+    this.isLoading = false; // prevents user from closing window if request is made
   }
 
   componentWillMount(){
@@ -89,6 +92,8 @@ class MainPasswordReset extends Component {
       return;
     }
 
+    this.isLoading = true;
+
     // making request to reset password
     this.props.PasswordResetRequest({email, password, cpassword, token: this.token})
       .then(({ data  }) => {
@@ -99,17 +104,19 @@ class MainPasswordReset extends Component {
         this.refs.email.value = "";
         this.refs.password.value = "";
         this.refs.cpassword.value = "";
+        this.isLoading = false;
       })
       .catch(({response }) => {
         let { message, success  } = response.data;
         // showing error message
         this.setState({ message, success, isLoading: false })
+        this.isLoading = false;
       });
   }
 
   render() {
 
-    const { message, success, email } = this.state;
+    const { message, success, email, isLoading } = this.state;
 
     let style = success ? "alert alert-success" : "alert alert-danger";
 
@@ -119,13 +126,11 @@ class MainPasswordReset extends Component {
         ref = "main"
       >
         <ul class="pop-up-detail">
-          <li
-            disabled = { this.state.isLoading }
-          > 
+          <li> 
             <span>
               <span></span>
               <span 
-                onClick = { ()=>this.props.toggleResetPassword() }
+                onClick = { ()=>PreventAction(this.isLoading, this.props.toggleResetPassword) }
                 class="glyphicon glyphicon-remove"
               ></span>
             </span>

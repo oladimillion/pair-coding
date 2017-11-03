@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from "prop-types";
 
 import { UpdateSessionDetailRequest  } from "../../actions/session-actions" 
+import { PreventAction } from "../../utils/prevent-action-util";
 
 class SessionDetail extends Component {
 
@@ -12,6 +13,7 @@ class SessionDetail extends Component {
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setProps = this.setProps.bind(this);
+    this.toggleEditing = this.toggleEditing.bind(this);
 
     this.state = {
       title: "",
@@ -53,7 +55,7 @@ class SessionDetail extends Component {
 
   onClick(e) {
     let {title, description} = this.state;
-    let{ detail } = this.props;
+    let{ detail, user } = this.props;
     let {id} = this.props.detail;
 
     description = description || "";
@@ -87,7 +89,7 @@ class SessionDetail extends Component {
     })
 
     // saves session detail update to server
-    this.props.UpdateSessionDetailRequest({id, title, description})
+    this.props.UpdateSessionDetailRequest({id, username: user.username, title, description})
       .then(({data})=>{
         let {success, message} = data;
         this.setState({
@@ -133,15 +135,14 @@ class SessionDetail extends Component {
         <ul 
           class="pop-up-detail">
 
-          <li
-            disabled = { isLoading }> 
+          <li>
             <span>
               <span
-                onClick = { ()=>this.toggleEditing() }
+                onClick = { ()=>PreventAction(isLoading, this.toggleEditing) }
                 class="glyphicon glyphicon-edit">
               </span>
               <span 
-                onClick = { ()=>this.props.toggleSessionDetail() }
+                onClick = { ()=>PreventAction(isLoading, this.props.toggleSessionDetail) }
                 class="glyphicon glyphicon-remove"
               ></span>
             </span>
@@ -206,7 +207,12 @@ SessionDetail.propTypes = {
   detail: PropTypes.object.isRequired,
 } 
 
+function mapstatetoprops(state){
+  return {
+    user: state.User,
+  }
+}
 
-export default connect(null, { 
+export default connect(mapstatetoprops, { 
   UpdateSessionDetailRequest,
 })(SessionDetail);

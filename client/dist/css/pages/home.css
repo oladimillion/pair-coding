@@ -1,7 +1,7 @@
 
 @media only screen and (max-width: 750px) {
-  main {
-    min-height: 600px;
+  main.home {
+    min-height: 650px;
   }
 }
 
@@ -125,16 +125,16 @@ section.session-items-control div.navigate-session span.glyphicon {
   section.session-items-control div.create-session input {
     width: 80%;
     padding: 5px;
-    padding-right: 29px;
+    padding-right: 22px;
     padding-left: 8px;
     font-size: 10px;
   }
   section.session-items-control div.search-session span.glyphicon,
   section.session-items-control div.create-session span.glyphicon {
-    top: 5.4px;
+    top: 4.50px;
     right: 9px;
     font-size: 13px;
-    padding: 7.5px;
+    padding: 7.9px;
   }
   section.session-items-control div.search-session span.glyphicon:hover,
   section.session-items-control div.create-session span.glyphicon:hover {
@@ -170,10 +170,9 @@ section.session-items-control div.navigate-session span.glyphicon {
   section.session-items-control div.navigate-session div.navigate-session-box {  
     display: flex;
   }
-  section.session-items-control div.navigate-session div.navigate-session-box > *{  
+  section.session-items-control div.navigate-session div.navigate-session-box > * {  
     margin: auto;
   }
-
 }
 
 div.no-session{

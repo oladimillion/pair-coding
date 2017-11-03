@@ -15,10 +15,10 @@ class ChatBox extends Component {
 
     this.state = { 
       textareaValue: "", // chat textare field
-      localChats: [] // holds array of chats received from redux store
+      localChats: [], // holds array of chats received from redux store
     }
 
-    this.username = undefined;
+    this.username = undefined; // user's username
     this.isLoaded = false; // first time component will receive props?
   }
 
@@ -29,6 +29,7 @@ class ChatBox extends Component {
   }
 
   componentDidMount(){ 
+    this.scrollAreaPadding(1);
     // scroll chat box to the bottom 
     this.scrollToBottom();
     this.username = this.props.user.username;
@@ -80,10 +81,28 @@ class ChatBox extends Component {
     this.setState({ 
       textareaValue: text
     });
+
     if(lines < 5){ 
       e.target.rows = lines;
+      this.scrollAreaPadding(lines);
     } else { 
       e.target.rows = 5;
+      this.scrollAreaPadding(5);
+    }
+  }
+
+  scrollAreaPadding(multiple, fixed = 29){
+    let calcPadding = (multiple * fixed);
+    let padding = 45;
+    if(multiple == 1){
+      padding = 45;
+      this.refs.scrollArea.style.paddingBottom = padding + "px";
+    } else  if (multiple == 2){
+      padding = calcPadding + 7;
+      this.refs.scrollArea.style.paddingBottom = padding + "px";
+    } else {
+      padding = calcPadding;
+      this.refs.scrollArea.style.paddingBottom = padding + "px";
     }
   }
 
@@ -109,8 +128,8 @@ class ChatBox extends Component {
     this.props.ClientSendMessage(data);
 
     this.refs.message.rows = 1;
+    this.scrollAreaPadding(1);
     this.scrollToBottom();
-
   }
 
   render(){ 

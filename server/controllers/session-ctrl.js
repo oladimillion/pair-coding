@@ -1,91 +1,20 @@
 const models = require('../models/models');
-
 const { Session } = models;
 
+const {createSession} = require("../utils/session-utils");
+const {testTitle} = require("../utils/validations");
+
+
 function create(req, res) {
-
-  const { username, title, id, content, description, time } = req.body;
-
-  let message = "";
-
-  const re = /[\s]?[\w+\W+]{4,20}/;
-
-  if(!title || !re.test(title)){
-    message= "Title requires 4-20 length of characters"
-  }
-
-  if(!time || !username || !id){
-    message = "All fields are required";
-  }
-
-  if (message) {
-    return res.status(400).json({
-      success: false,
-      message
-    });
-  }
-
-  const session = new Session({ 
-    username, title, id, content, description, time
-  });
-
-  session.save()
-    .then(function(result) {
-      // session created successfully
-      return res.status(201).json({
-        success: true,
-        message: "Done"
-      });
-    })
-    .catch(function(err) {
-
-      if (err.errmsg) {
-        if (err.errmsg.indexOf('duplicate key error') != -1) {
-          //unique error occured
-          message = "";
-
-          if (err.errmsg.indexOf('id_1') != -1) {
-            message = "Id already taken";
-          }
-
-          if (message) {
-            return res.status(400).json({
-              success: false,
-              message
-            });
-          } else {
-            throw err;
-          }
-
-        }
-      } else {
-        //validation error occured
-        const { title } = err.errors;
-        message = "";
-
-        if (title != undefined) {
-          message = title.message;
-        }
-
-        if (message) {
-          return res.status(400).json({
-            success: false,
-            message
-          });
-        } else {
-          throw err;
-        }
-      }
-    });
+  return createSession(res, req.body, true);
 }
-
 
 function fetchOne(req, res) {
 
   if( !req.params.id ){
     return res.status(400).json({
       success: false,
-      message: "No such resource"
+      message: "Session not found"
     })
   }
 
@@ -99,7 +28,7 @@ function fetchOne(req, res) {
     } else if (result == null) {
       return res.status(400).json({
         success: false,
-        message: "No such resource"
+        message: "Session not found"
       });
     } else if (result != null) {
 
@@ -124,10 +53,11 @@ function fetchOne(req, res) {
 function fetchAll(req, res) {
 
   // making sure query object is not empty
+  // ie: username not provided
   if( Object.keys(req.query).length  == 0 ){
     return res.status(400).json({
       success: false,
-      message: "No such resource"
+      message: "Please login!"
     })
   }
 
@@ -139,15 +69,16 @@ function fetchAll(req, res) {
     if (error) {
       throw error;
     } else if (result == null) {
+      // user have no session created
       return res.status(400).json({
         success: false,
-        message: "Session doesn't exist"
+        message: "No session yet"
       });
     } else if (result != null) {
 
       let filteredResult = result.map((data) => {
 
-      // filtering out necessary data from db
+        // filtering out necessary data from db
         let temp = {};
         temp.username = data.username;
         temp.title = data.title;
@@ -171,85 +102,108 @@ function fetchAll(req, res) {
 
 function updateSession(req, res) {
 
-  const { id, content, time } = req.body;
+  const { id, title, description, username, content, time } = req.body;
 
   const conditions = { id }
-  const update = { content, time };
 
-  Session.update(conditions, update, callback);
-
-  function callback(err, numAffected) {
-    // numAffected is the number of updated documents
-    if (err) {
-      throw err;
-    }
-
-    if (numAffected.n == 1) {
-      if (numAffected.nModified == 0) {
-        return res.status(401).json({
-          success: false,
-          message: "No changes made"
+  Session.findOne({
+    id
+  })
+    .select("content time")
+    .exec(function (err, data) {
+      if (err) 
+      {
+        throw err;
+      } 
+      else if (data) 
+      {
+        // update session for the user, 
+        data.content = content;
+        data.time = time;
+        data.save(function(err) {
+          if(err)
+          {
+            // an error occured
+            return res.status(400).json({
+              success: false,
+              message: "Not saved!"
+            })
+          } 
+          else
+          {
+            return res.status(201).json({
+              success: true,
+              message: "Saved!"
+            })
+          }
         });
-      }
 
-      return res.status(201).json({
-        success: true,
-        message: "Saved"
-      });
+      } else {
+        // session does exit, but not for the 
+        // user making update request, 
+        // therefore, clone the session for the user
+        return createSession(res, req.body);
+      } 
 
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Not saved"
-      });
-    }
-  }
+    });
 }
 
 function updateSessionDetail(req, res) {
 
-  const { id, title, description } = req.body;
-
-  const conditions = { id }
-  const update = { title, description };
-
-  const re = /[\s]?[\w+\W+]{4,20}/;
-
-  if(!title || !re.test(title)){
-    return res.status(401).json({
-      success: false,
-      message: "Title requires 4-20 length of characters"
-    })
+  const { id, username, title, description } = req.body;
+  
+  if(!testTitle(title)){
+    message= "Title requires 4-20 length of characters"
   }
 
-  Session.update(conditions, update, callback);
-
-  function callback(err, numAffected) {
-    // numAffected is the number of updated documents
-    if (err) {
-      throw err;
-    }
-
-    if (numAffected.n == 1) {
-      if (numAffected.nModified == 0) {
-        return res.status(401).json({
+  Session.findOne({
+    id
+  })
+    .select("username title, description")
+    .exec(function (err, data) {
+      if (err) 
+      {
+        throw err;
+      } 
+      else if (data) 
+      {
+        // update session for the user, 
+        if(data.username == username){
+          data.username = username;
+          data.title = title;
+          data.description = description;
+          data.save(function(err) {
+            if(err)
+            {
+              // an error occured
+              return res.status(400).json({
+                success: false,
+                message: "Not Updated!"
+              })
+            } 
+            else
+            {
+              return res.status(201).json({
+                success: true,
+                message: "Updated!"
+              })
+            }
+          });
+        } else {
+          // user trying to update session is not the owner
+          return res.status(400).json({
+            success: false,
+            message: "Not Allowed!"
+          })
+        } 
+      } else {
+        // session doesn't exit
+        return res.status(400).json({
           success: false,
-          message: "No changes made"
-        });
-      }
-
-      return res.status(201).json({
-        success: true,
-        message: "Saved"
-      });
-
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Not saved"
-      });
-    }
-  }
+          message: "Not found!"
+        })
+      } 
+    });
 }
 
 function deleteSession(req, res){
@@ -263,12 +217,12 @@ function deleteSession(req, res){
     if(session){
       return res.status(201).json({
         success: true,
-        message: "Deleted"
+        message: "Deleted!"
       });
     } else {
       return res.status(400).json({
         success: false,
-        message: "Not Deleted"
+        message: "Not Deleted!"
       });
     }
 

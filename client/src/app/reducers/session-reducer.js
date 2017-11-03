@@ -26,9 +26,9 @@ export function Sessions(state = [], actions = {}){
 
     case UPDATE_SESSION: { 
       let nextState = state;
-      let { id, content, time } = actions.payload;
+      let { id, content, time, title } = actions.payload;
       nextState = nextState.map((session) => { 
-        if(session.id  == id){ 
+        if(session.title  == title){ 
           session.content = content;
           session.time = time;
         }

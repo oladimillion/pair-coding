@@ -71,15 +71,19 @@ class SessionItemsControl extends Component {
           this.setState({ 
             createInputValue: ""
           })
+          this.creating = false;
         })
+        .catch(()=>{
+          this.creating = false;
+        });
     } else { 
+      this.creating = false;
       // error message
       SetSessionInfo({ 
         success: false,
         message: "Title requires 4-20 length of characters"
       });
     }
-    this.creating = false;
   }
 
   createInput(e){ 
@@ -187,7 +191,7 @@ SessionItemsControl.propTypes = {
   getSearchInputValue: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
-  currentItemNumber: PropTypes.number.isRequired,
+  currentItemNumber: PropTypes.number,
   totalItems: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
 }

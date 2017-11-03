@@ -36,7 +36,8 @@ function signin( req, res ) {
 						message: "Invalid credentials provided"
 					} );
         } else {
-          // given user a token
+          // giving user a token which is needed 
+          // for authentication
           const token = jwt.sign({
             username: user.username,
             email: user.email,
@@ -88,6 +89,8 @@ function signup(req, res) {
     .catch( function (err) {
 
       if (err) {
+        // some data provided by the user 
+        // already exist
         return duplicateError(res, err)
       } else {
         //validation error occured
@@ -127,7 +130,7 @@ function passwordReset (req, res){
 
   let { email, password, cpassword, token } = req.body;
 
-  // verify token
+  // verifying password reset token
   PasswordReset.findOne({
     token
   })
@@ -142,7 +145,7 @@ function passwordReset (req, res){
       }
       else
       {
-        // token valid provided      
+        // valid token provided      
 
         // validating data from user
         let message = isValidResetPwData(email, password, cpassword );
@@ -182,7 +185,7 @@ function passwordReset (req, res){
                   if (err) {
                     throw err;
                   } else {
-                    // remove token and corresponding data from db
+                    // removing password reset token and corresponding data from db
                     PasswordReset.findOneAndRemove({token}, ()=>{})
 
                     return res.status(201).json({
@@ -210,7 +213,7 @@ function passwordResetLink (req, res){
     return res.status(400).json({ success: false, message });
   }
 
-  // verify email
+  // verify user's email
   User.findOne({
     email
   })
@@ -226,7 +229,7 @@ function passwordResetLink (req, res){
         PasswordReset.findOne({
           email
         })
-          .select("token, email, time")
+          .select("token email time")
           .exec(function (err, data) {
             if (err) 
             {
@@ -251,7 +254,7 @@ function passwordResetLink (req, res){
                 } 
                 else
                 {
-                  // sending user password reset link
+                  // sending user an email containing password reset link
                   return sendMail(res, email, data.token);
                 }
               });
@@ -259,8 +262,8 @@ function passwordResetLink (req, res){
             } 
             else 
             {
-              // no existing request
-              // create token and send user password reset link
+              // user has not before requested for password reset link.
+              // create token and send user an email containing password reset link
               let reset = new PasswordReset({
                 token: createToken(),
                 email,
@@ -269,7 +272,7 @@ function passwordResetLink (req, res){
 
               reset.save()
                 .then((data) => {
-                  // sending user password reset link
+                  // sending user an email containing password reset link
                   return sendMail(res, email, data.token);
 
                 })
@@ -303,6 +306,7 @@ function profileUpdate(req, res) {
   }
   let { username, email, password, phone, opassword, _username, _email, _phone } = req.body;
 
+  // fetching user data, using this conditions
   const conditions = { username: _username, email: _email, phone: _phone };
 
   User.findOne(conditions).select('username phone email password')
@@ -323,7 +327,7 @@ function profileUpdate(req, res) {
           // password needed to update profile
           return res.status(401).json({
             success: false,
-            message: "Your password is required or incorrect"
+            message: "Your password is incorrect"
           });
         }
 
@@ -343,6 +347,7 @@ function profileUpdate(req, res) {
 
           User.update(conditions, update, (err, numAffected) => {
             if (err) {
+              // someone else already has data provided by the user
               return duplicateError(res, err)
             } else {
 
@@ -351,11 +356,12 @@ function profileUpdate(req, res) {
               if(username != _username || email != _email || phone != _phone){
 
                 if(username != _username){
-                  // updating session after username change
-                  Session.update({username: _username}, {username}, (err) => {
+                  // updating all sessions owned by user after username change
+                  Session.update({username: _username}, {username}, {multi: true}, (err) => {
                     if(err)
                       throw err;
                   })
+
                 }
                 // giving user a new token after successful profile update
                 token = jwt.sign({
@@ -394,8 +400,8 @@ function verifyPasswordResetToken(req, res){
 
         if((Date.now() - time) > 86400000)
         {
-          // token has expired
-          // remove token and corresponding data from db 
+          // password reset token has expired
+          // remove password reset token and corresponding data from db 
           PasswordReset.findOneAndRemove({token}, ()=>{})
 
           return res.status(400).json({
@@ -405,7 +411,7 @@ function verifyPasswordResetToken(req, res){
         }
         else
         {
-          // return user's email based on token provided
+          // return user's email based on password reset token provided
           return res.status(201).json({
             payload: data.email
           })
@@ -413,7 +419,7 @@ function verifyPasswordResetToken(req, res){
       }
       else 
       {
-        // token not found
+        // password reset token not found
         return res.status(400).json({
           success: false,
           message: "Link is invalid",

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import { isValidEmail  } from "../../../../../server/utils/validations"; 
 import { PasswordResetLinkRequest  } from "../../actions/user-actions" 
+import { PreventAction } from "../../utils/prevent-action-util";
 
 class PasswordReset extends Component {
 
@@ -16,7 +17,7 @@ class PasswordReset extends Component {
     this.state = {
       message: "",
       success: true,
-      isLoading: false
+      isLoading: false // is request sent to server?
     }
   }
 
@@ -66,14 +67,14 @@ class PasswordReset extends Component {
 
     // requesting password reset link
     this.props.PasswordResetLinkRequest({email})
-      .then(({ data  }) => {
+      .then(({ data }) => {
         let { message, success } = data;
-        this.setState({ message, success, isLoading: false })
+        this.setState({ message, success, isLoading: false });
         this.refs.email.value = "";
       })
       .catch(({response }) => {
         let { message, success  } = response.data;
-        this.setState({ message, success, isLoading: false })
+        this.setState({ message, success, isLoading: false });
       });
   }
 
@@ -94,8 +95,7 @@ class PasswordReset extends Component {
             <span>
               <span></span>
               <span 
-                disabled = {isLoading }
-                onClick = { ()=>this.props.toggleResetPassword() }
+                onClick = { ()=>PreventAction(isLoading, this.props.toggleResetPassword) }
                 class="glyphicon glyphicon-remove"
               ></span>
             </span>

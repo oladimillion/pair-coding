@@ -4,6 +4,8 @@ import PropTypes from "prop-types"
 import { isValidProfileData } from "../../../../../server/utils/validations";
 import { ProfileUpdateRequest } from "../../actions/user-actions"
 import { FetchAllSessionRequest, ClearSessionState } from "../../actions/session-actions";
+import { PreventAction } from "../../utils/prevent-action-util";
+import { SetPosition } from "../../actions/position-actions"
 
 class ProfileDetail extends Component {
 
@@ -52,7 +54,7 @@ class ProfileDetail extends Component {
 
     let path = window.location.pathname;
     const re = /\/session\//;
-    let rejoin = (re.test(path))
+    let inSessionPage = (re.test(path))
 
     const { user } = this.props;
 
@@ -91,12 +93,9 @@ class ProfileDetail extends Component {
           message, success, isLoading: false, isEditing: false,
           opassword: "", password: "", cpassword: ""
         })
-        if(rejoin){
-          // clearing state after profile update
-          this.props.ClearSessionState()
-        } else {
-          // clearing state after profile update
-          this.props.ClearSessionState()
+        // clearing state after profile update
+        this.props.ClearSessionState()
+        if(!inSessionPage){
           // fetching all saved sessions from the server after profile update
           this.props.FetchAllSessionRequest({username});
         }
@@ -131,15 +130,14 @@ class ProfileDetail extends Component {
         <ul 
           class="pop-up-detail">
 
-          <li
-            disabled = { isLoading }> 
+          <li>
             <span>
               <span
-                onClick = { ()=>this.toggleEditing() }
+                onClick = { ()=> PreventAction(isLoading, this.toggleEditing) }
                 class="glyphicon glyphicon-edit">
               </span>
               <span 
-                onClick = { ()=>this.props.toggleProfileDetail() }
+                onClick = { ()=> PreventAction(isLoading, this.props.toggleProfileDetail) }
                 class="glyphicon glyphicon-remove"
               ></span>
             </span>
@@ -240,6 +238,7 @@ class ProfileDetail extends Component {
 ProfileDetail.propTypes = {
   ProfileUpdateRequest: PropTypes.func.isRequired,
   ClearSessionState: PropTypes.func.isRequired,
+  SetPosition: PropTypes.func.isRequired,
   FetchAllSessionRequest: PropTypes.func.isRequired,
   toggleProfileDetail: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
@@ -255,4 +254,5 @@ export default connect(mapStateToProps, {
   ProfileUpdateRequest,
   FetchAllSessionRequest,
   ClearSessionState,
+  SetPosition,
 })(ProfileDetail);

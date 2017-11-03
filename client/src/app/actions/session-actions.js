@@ -131,7 +131,7 @@ export function UpdateSessionRequest(data){
         let {  success, message  } = response.data;
         // dispatch error message
         dispatch(SetSessionInfo({ message, success }));
-        throw response;
+        // throw response;
       })
   }
 }

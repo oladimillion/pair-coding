@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import shortid from "shortid";
 import { ClientConnection, ClientLeftSession } from "../actions/socket-actions"
 import { ClientSendCode } from "../actions/socket-actions"
 
@@ -30,6 +31,7 @@ class Session extends Component{
       description: "",
       title: "",
       detail: {},
+      owner: "",
     }
 
 
@@ -79,6 +81,7 @@ class Session extends Component{
               content: data.payload.content,
               title: data.payload.title,
               description: data.payload.description || "",
+              owner: data.payload.username,
             });
             // update editor with data from server
             this._ProcessCode(data.payload.content);
@@ -107,6 +110,7 @@ class Session extends Component{
           content: content[0].content,
           title: content[0].title,
           description: content[0].description || "",
+          owner: content[0].username,
         });
         // update editor with data from server
         this._ProcessCode(content[0].content);
@@ -210,12 +214,22 @@ class Session extends Component{
   }
 
   saveSession(){
+    const {title, description} = this.state;
     // save session to server db on save button clicked
     let data = {}
 
-    data.id = this.id;
+    data.id =  (this.props.user.username == this.state.owner) ? this.id : shortid.generate();
+    data.title = title;
+    data.description = description;
+    data.username = this.props.user.username;
+    data.owner = this.state.owner;
     data.content = this.state.content; 
     data.time = new Date().toLocaleString();
+
+    this.props.SetSessionInfo({
+      success: true, 
+      message: "Please wait..."
+    });
 
     // sending save request to server
     this.props.UpdateSessionRequest(data);

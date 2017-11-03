@@ -7,10 +7,10 @@
 	 * login and registration page styles begin here
 	 */
 	.top {
-		min-width: 580px;
+		min-width: 610px;
 	}
 	.top-inner {
-		width: 580px;
+		width: 612px;
 	} 
   .login {
     width: 446px;
@@ -48,10 +48,10 @@
     font-size: 11px;
   }
   .bottom-inner {
-    width: 580px;
+    width: 620px;
   }
   .info {
-    width: 260px;
+    width: 320px;
   }
   .info h1 {
     font-size: 20px;

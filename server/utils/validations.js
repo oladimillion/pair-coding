@@ -1,6 +1,17 @@
+function testTitle(title){
+
+  const re = /[\s]?[\w+\W+]{4,20}/;
+  if(!title || !re.test(title))
+    return false;
+
+  return true;
+}
+
+
+
 function testEmail(email){
   email = email ? email.trim() : email;
-  const re = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,40}$/
+  const re = /^[A-Za-z0-9._%-]{2,40}@[A-Za-z0-9.-]{2,20}.[A-Za-z]{2,10}$/
   if (!email || !re.test(email) ) {
     return false;
   }
@@ -72,7 +83,7 @@ function isValidRegData(data){
   let { username, email, password, cpassword, phone } = data;
 
   if(!testUsername(username)){
-    return "Username may contain number or alphabet or both, between 2 and 20 in length";
+    return "Username may be number or alphabet or both, between 2 and 20 in length";
   }
 
   if(!testEmail(email)){
@@ -161,4 +172,5 @@ function isValidProfileData(data){
   return "";
 }
 
-module.exports = {isValidLoginData, isValidResetPwData, isValidRegData, isValidEmail, isValidProfileData};
+module.exports = {isValidLoginData, isValidResetPwData, 
+  isValidRegData, isValidEmail, isValidProfileData, testTitle};

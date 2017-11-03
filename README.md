@@ -1,7 +1,7 @@
 # PAIR-CODING     
 
 > Pair-Coding is a simple application that allows friends 
-> and colleagues code and chat in real time for free.
+> and colleagues code and chat in real time.
 
 ### This application allows people to 
   - create an account, 
@@ -10,7 +10,7 @@
 
   - create session and save session
 
-  - create temporary session by given the session custom id:
+  - create temporary session by prefixing session route with custom id, ie. http://localhost:8000/session/my_custom_session_id 
 
   - invite people to session,
 
@@ -18,9 +18,6 @@
 
   - share saved session with friends.
 
-  **NOTE:** *if app is running locally, custom session with http://localhost:8000/session/my_custom_session_id 
-  else https://pair-coding.herokuapp.com/session/my_custom_session_id*
- 
 
 ## To run the app locally
   1. Clone the repository:
@@ -37,12 +34,12 @@
 
   5. enter `http://localhost:8000` in your browser's address bar to use the app
 
-## This app is live on server
+## The app is live on server
   visit [ https://pair-coding.herokuapp.com ] 
 
-## Authors
+## Author
   **Oladimeji Akande** 
 
 ## License
-  MIT.
+  None.
 

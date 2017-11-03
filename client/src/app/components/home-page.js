@@ -36,7 +36,8 @@ class Home extends Component {
     this.maxNum = 10; // max number of session items to show per page
   }
 
-  componentWillMount(){
+  componentDidMount(){
+    document.title = "Pair Coding - Home"
 
     let {FetchAllSessionRequest, sessions, position} = this.props;
     // getting initial page/position of session items
@@ -53,7 +54,7 @@ class Home extends Component {
             isLoading: false
           })
           // shows session items
-          this.updateFilterSession(data.payload);
+          // this.updateFilterSession(data.payload);
         })
         .catch(({response}) => {
           this.setState({
@@ -67,11 +68,6 @@ class Home extends Component {
         isLoading: false
       })
     }
-
-  }
-
-  componentDidMount(){
-    document.title = "Pair Coding - Home"
   }
 
   componentWillReceiveProps(newProps){
@@ -219,6 +215,10 @@ class Home extends Component {
     sessions = sessions.sort(MySort());
     let length = sessions.length;
 
+    if(length == 0){
+      return;
+    }
+
     if(this.limit >= length){
       this.limit = length;
     }
@@ -305,7 +305,6 @@ Home.propTypes = {
   SetPosition: PropTypes.func.isRequired,
   DeleteSessionRequest: PropTypes.func.isRequired,
   Logout: PropTypes.func.isRequired,
-  SetPosition: PropTypes.func.isRequired,
   sessions: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   position: PropTypes.object.isRequired,

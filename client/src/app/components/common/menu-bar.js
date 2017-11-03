@@ -130,7 +130,8 @@ class MenuBar extends Component {
         <div class="settings">
           <a
             onClick = {()=>this.toggleProfile()}>
-            <span class="glyphicon glyphicon-cog"></span> Settings 
+            <span class="glyphicon glyphicon-triangle-bottom"></span> 
+            {this.props.user.username} 
           </a>
 
           {this.state.profile && 
@@ -140,15 +141,14 @@ class MenuBar extends Component {
                 logout = {this.props.logout}
               />
           }
-
-          {
-            this.state.profileDetail &&
-              <ProfileDetail 
-                toggleProfileDetail = {this.toggleProfileDetail}
-              />    
-          }
-
         </div>
+
+        {
+          this.state.profileDetail &&
+            <ProfileDetail 
+              toggleProfileDetail = {this.toggleProfileDetail}
+            />    
+        }
 
       </nav>
 
@@ -199,7 +199,8 @@ MenuBar.propTypes = {
 
 function mapStateToProps(state){
   return { 
-    SessionInfo: state.SessionInfo
+    SessionInfo: state.SessionInfo,
+    user: state.User,
   }
 }
 
