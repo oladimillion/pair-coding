@@ -78,6 +78,8 @@ class Client
   }
 
   onDisconnect(socket){
+    // removing client id from socket pool
+    socket.id = null;
     // notify peers about a member's departure 
     this.broadcastMessage(socket, socket.username + " has left")
     // if nobody in session, delete session and session data
@@ -85,15 +87,15 @@ class Client
       username: socket.username,
       sessionId: socket.sessionId
     });
-
+    // removing client username from socket pool
+    socket.username = null;
     if(sessionIsEmpty){
       this.sessionContentMap.delete(socket.sessionId);
       this.sessionChatMap.delete(socket.sessionId);
+      // if no more peer in session, remove sessionId from socket pull
+      socket.sessionId = null;
     }
 
-    socket.id = null;
-    socket.username = null;
-    socket.sessionId = null;
   }
 
   onJoin(sessionChannel, socket, connectionData)
