@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { SetSessionInfo } from "../../actions/session-actions"
 import { ClientSendMessage  } from "../../actions/socket-actions"
 
 class ChatBox extends Component { 
@@ -58,10 +59,20 @@ class ChatBox extends Component {
 
 
       if(self == "self"){
+
+        // message delivered status
+        this.props.SetSessionInfo({
+          success: true,
+          message: "sent"
+        })
+
         // clears input field
         this.setState({ 
           textareaValue: "",
         })
+        this.refs.message.rows = 1;
+        this.scrollAreaPadding(1);
+        this.scrollToBottom();
       }
 
       this.setState({ 
@@ -95,7 +106,6 @@ class ChatBox extends Component {
     let calcPadding = (multiple * fixed);
     let padding = 45;
     if(multiple == 1){
-      padding = 45;
       this.refs.scrollArea.style.paddingBottom = padding + "px";
     } else  if (multiple == 2){
       padding = calcPadding + 7;
@@ -126,10 +136,11 @@ class ChatBox extends Component {
 
     // call to client to emit message
     this.props.ClientSendMessage(data);
-
-    this.refs.message.rows = 1;
-    this.scrollAreaPadding(1);
-    this.scrollToBottom();
+    // message sending status
+    this.props.SetSessionInfo({
+      success: true,
+      message: "sending..."
+    })
   }
 
   render(){ 
@@ -177,6 +188,7 @@ class ChatBox extends Component {
 }
 
 ChatBox.PropTypes = {
+  SetSessionInfo: PropTypes.func.isRequired,
   ClientSendMessage: PropTypes.func.isRequired,
   chat: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
@@ -190,5 +202,8 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {ClientSendMessage})(ChatBox);
+export default connect(mapStateToProps, {
+  ClientSendMessage,
+  SetSessionInfo,
+})(ChatBox);
 
