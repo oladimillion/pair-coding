@@ -62,6 +62,15 @@ class Client
   {
     data = JSON.parse(data);
     const { username, type, message, time } = data;
+    if(type == "self"){
+      // message delivered status
+      this.dispatch(SetSessionInfo({
+        success: true,
+        message: "sent"
+      }));
+      return;
+    }
+
     this.dispatch(ProcessChat({ username, type, message, time }));
   }
 
@@ -85,6 +94,7 @@ class Client
 
   sendMessage(data)
   {
+    this.dispatch(ProcessChat(data));
     this.sessionChannel.emit("message", JSON.stringify(data));
   }
 }

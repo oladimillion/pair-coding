@@ -5,6 +5,7 @@ class Client
   {
     // keeps track session content
     this.sessionContentMap = new Map;
+    // keeps track session conversation
     this.sessionChatMap = new Map;
     // keep list of connected members and there respective sessions 
     this.sessionAndMemberList = new Map;
@@ -59,9 +60,12 @@ class Client
     } else {
       value.delete(username);
       if(value.size){
+        // there remain connections in the session
         this.sessionAndMemberList.set(sessionId, value);
         return false;
       } else {
+        // no more connection in the session with
+        // with specified id so, remove from session map
         this.sessionAndMemberList.delete(sessionId);
         return true;
       }
@@ -92,7 +96,7 @@ class Client
     if(sessionIsEmpty){
       this.sessionContentMap.delete(socket.sessionId);
       this.sessionChatMap.delete(socket.sessionId);
-      // if no more peer in session, remove sessionId from socket pull
+      // if no more peer in session, remove sessionId from socket pool
       socket.sessionId = null;
     }
 
@@ -101,6 +105,8 @@ class Client
   onJoin(sessionChannel, socket, connectionData)
   {
     if(!connectionData.username && !connectionData.sessionId){
+      // connection is only established when username and sessionId 
+      // are provided
       return;
     }
     // adds member into a session

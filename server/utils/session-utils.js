@@ -79,7 +79,7 @@ function createSession(res, data, newSession = false){
         }  else if(data.username == username 
           && data.title == title && !newSession){
           // user is not the original creator of the 
-          // session, but it's successfully cloned,
+          // session, but has a clone of it,
           // therefore, perform session update 
           return savedData()
         }

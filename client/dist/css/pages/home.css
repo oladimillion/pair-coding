@@ -2,6 +2,7 @@
 @media only screen and (max-width: 750px) {
   main.home {
     min-height: 650px;
+    max-height: 750px;
   }
 }
 
@@ -269,7 +270,7 @@ section.session-items ul li span.delete:hover {
   }
   section.session-items ul li {
     margin: 0 auto;
-    font-size: 10px;
+    font-size: 13px;
     width: 95%;
     margin-bottom: 5px;
   }
@@ -282,7 +283,7 @@ section.session-items ul li span.delete:hover {
   }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 580px) {
   section.session-items ul li span.time {
     display: none;
   }

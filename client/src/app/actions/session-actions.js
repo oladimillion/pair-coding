@@ -37,15 +37,11 @@ export function AddNewSession(data){
   }
 }
 
-export function UpdateSession({ id, content, time }){ 
+export function UpdateSession(data){ 
   // update a particular session locally in redux store
   return { 
     type: UPDATE_SESSION,
-    payload: { 
-      id,
-      time,
-      content 
-    }
+    payload: data
   }
 }
 export function UpdateSessionDetail(data){ 
@@ -87,13 +83,13 @@ export function FetchAllSessionRequest({ username }){
 
 export function AddNewSessionRequest(data){ 
   //creates new session on the server
-  const {  username, title, id, content, time  } = data;
+  const _data = data;
   return dispatch => { 
     // axios request to add new session 
     return axios.post("/api/session/create", data)
       .then(({ data }) => { 
         // add new session to redux store
-        dispatch(AddNewSession({ username, title, id, content, time }));
+        dispatch(AddNewSession(_data));
         // dispatch success message
         dispatch(SetSessionInfo(data));
         return data;

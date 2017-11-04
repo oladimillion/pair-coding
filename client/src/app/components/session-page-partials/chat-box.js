@@ -46,7 +46,6 @@ class ChatBox extends Component {
     let { chat } = nextProps;
 
     if(chat.length){
-      let self = chat[chat.length - 1].type;
       let filterChats = [];
 
       filterChats = chat.map((item)=>{
@@ -57,28 +56,11 @@ class ChatBox extends Component {
         return item;
       })
 
-
-      if(self == "self"){
-
-        // message delivered status
-        this.props.SetSessionInfo({
-          success: true,
-          message: "sent"
-        })
-
-        // clears input field
-        this.setState({ 
-          textareaValue: "",
-        })
-        this.refs.message.rows = 1;
-        this.scrollAreaPadding(1);
-        this.scrollToBottom();
-      }
-
       this.setState({ 
         localChats: this.isLoaded ? filterChats : chat
       })
 
+      this.scrollToBottom();
       this.isLoaded = true;
     }
   }
@@ -141,6 +123,13 @@ class ChatBox extends Component {
       success: true,
       message: "sending..."
     })
+    // clears input field
+    this.setState({ 
+      textareaValue: "",
+    })
+    this.refs.message.rows = 1;
+    this.scrollAreaPadding(1);
+
   }
 
   render(){ 
