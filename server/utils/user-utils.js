@@ -80,7 +80,7 @@ function sendMail(res, email, token)
       })
     }
 
-    return res.status(201).json({ success: true,
+    return res.status(200).json({ success: true,
       message: "Check your inbox for password reset link" });        
 
   })

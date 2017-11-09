@@ -44,7 +44,7 @@ function signin( req, res ) {
             phone: user.phone
           }, process.env.JWT_SECRET);
 
-          return res.status(201).json({
+          return res.status(200).json({
             success: true,
             message: "Welcome",
             payload: token
@@ -80,7 +80,7 @@ function signup(req, res) {
   user.save()
     .then(function (result) {
       // registration successful
-      return res.status( 201 ).json({
+      return res.status( 200 ).json({
         success: true,
         message: "Registration Successful!.\nYou may now login"
       });
@@ -412,7 +412,7 @@ function verifyPasswordResetToken(req, res){
         else
         {
           // return user's email based on password reset token provided
-          return res.status(201).json({
+          return res.status(200).json({
             payload: data.email
           })
         }

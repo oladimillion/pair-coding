@@ -63,7 +63,11 @@ class Editor extends Component {
     this.left = editorInfo.left;
     this.cursorPos = cursorPos;
 
-    editor.on('keyup', () => {       
+    editor.on('keyup', (cm, event) => {       
+      if(this.keyStroke(event))
+      {
+        return;
+      }
       // get editor's content
       content = editor.getValue();
       // get editor's scroll position
@@ -97,6 +101,22 @@ class Editor extends Component {
   componentWillReceiveProps(newProps) { 
     // update editor with props content
     this.setValue(newProps.code);
+  }
+
+  keyStroke(event){
+    if(event.key == "Control" || event.key == "Shift" 
+      || event.key == "Alt" || event.key == "ArrowDown"
+      || event.key == "ArrowUp" || event.key == "ArrowRight" 
+      || event.key == "ArrowLeft" || event.key == "PageUp" 
+      || event.key == "PageDown" || event.key == "Home" 
+      || event.key == "End" || event.ctrlKey 
+      || event.shiftKey || event.altKey
+    )
+    {
+      return true;
+    }
+
+    return false;
   }
 
   setValue(data){

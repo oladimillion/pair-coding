@@ -12,7 +12,7 @@
 
   - create temporary session by prefixing session route with custom id, ie. http://localhost:8000/session/my_custom_session_id 
 
-  - invite people to session,
+  - invite people to session by sharing "session url" with them,
 
   - chat in real time in the course of the session, 
 

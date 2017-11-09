@@ -6,6 +6,7 @@ import shortid from "shortid";
 
 import { SetSessionInfo } from "../../actions/session-actions"
 import { AddNewSessionRequest } from "../../actions/session-actions"
+import { formatTime } from "../../utils/session-utils"
 
 class SessionItemsControl extends Component { 
 
@@ -51,7 +52,7 @@ class SessionItemsControl extends Component {
 
     const id = shortid.generate(),
       content = "",
-      time = new Date().toLocaleString();
+      time = formatTime(new Date().toLocaleString());
 
     const title = this.state.createInputValue.trim();
 

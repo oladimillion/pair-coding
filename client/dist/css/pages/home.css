@@ -2,7 +2,14 @@
 @media only screen and (max-width: 750px) {
   main.home {
     min-height: 650px;
+    height: 150vh;
     max-height: 750px;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  main.home {
+    height: calc(90vh + 66px);
   }
 }
 
@@ -276,16 +283,19 @@ section.session-items ul li span.delete:hover {
   }
   section.session-items ul li span {
     width: 55%;
-    padding: 9px;
   }
   section.session-items ul li span.time {
-    width: 30%;
+    width: 35%;
   }
 }
 
 @media only screen and (max-width: 580px) {
   section.session-items ul li span.time {
     display: none;
+  }
+  section.session-items ul li span {
+    width: 55%;
+    padding: 9px;
   }
 }
 

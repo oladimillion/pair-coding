@@ -2,7 +2,6 @@ const models = require('../models/models');
 const { Session } = models;
 const {testTitle} = require("./validations");
 
-
 function createSession(res, data, newSession = false){
 
   const { username, title, id, content, description, time } = data;
@@ -28,7 +27,7 @@ function createSession(res, data, newSession = false){
   Session.findOne({
     username, title
   })
-    .select("id username title content")
+    .select("id username title content time")
     .exec(function (err, data) {
 
       function savedData()
@@ -99,7 +98,7 @@ function createSession(res, data, newSession = false){
     session.save()
       .then(function(result) {
         // session created successfully
-        return res.status(201).json({
+        return res.status(200).json({
           success: true,
           message: "Created!"
         });

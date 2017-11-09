@@ -17,6 +17,8 @@ import { AddNewSessionRequest } from "../actions/session-actions";
 import { FetchOneSessionRequest } from "../actions/session-actions";
 import { ProcessCode } from "../actions/editor-actions"
 
+import { formatTime } from "../utils/session-utils"
+
 
 class Session extends Component{
 
@@ -46,6 +48,7 @@ class Session extends Component{
     this._ProcessCode = this._ProcessCode.bind(this);
 
     this.showHomeBtn = true;
+    this.consoleReplaced = false;
   }
 
   componentWillMount(){
@@ -150,9 +153,6 @@ class Session extends Component{
   compileCode(){
     // compile javascript code from the editor
     // NOTE: es2015 not supported yet...
-    this.setState({
-      _showChatBox: false
-    });
 
     let result = undefined;
     let re = /console.log/gim;
@@ -160,22 +160,32 @@ class Session extends Component{
     code = code.replace(re, "alert");
     re = /alert/gim;
     code = code.replace(re, "JSON.stringify")
+    this.setState({
+      _showChatBox: false
+    });
 
     try{
 
       const myInterpreter = new Interpreter(code, this.initConsole);
       myInterpreter.run();
       result = myInterpreter.value;
-
       if(result == undefined){
         result = "undefined";
       }
+      if(typeof result != "string")
+        result = result.toString();
+        // result = JSON.stringify(result);
 
     } catch(error){
       result = error.toString();
     }
 
+    // let code = this.state.content 
+    // let result = this.run(code);
+
     this.setState({output: result});    
+
+
   }
 
   goHome() {
@@ -224,7 +234,8 @@ class Session extends Component{
     data.username = this.props.user.username;
     data.owner = this.state.owner;
     data.content = this.state.content; 
-    data.time = new Date().toLocaleString();
+    let time = new Date().toLocaleString();
+    data.time = formatTime(time);
 
     this.props.SetSessionInfo({
       success: true, 
@@ -271,13 +282,13 @@ class Session extends Component{
     const {title, description} = this.state;
     this.state.detail = {title, description, id: this.id};
     return (
-      <main>
-        <span>
-          <MenuBar 
-            logout = {this.logout}
-            showHomeBtn = {this.showHomeBtn}
-            goHome = {this.goHome}
-          />
+      <main class="session">
+        <MenuBar 
+          logout = {this.logout}
+          showHomeBtn = {this.showHomeBtn}
+          goHome = {this.goHome}
+        />
+        <div class="divide">
           <SessionEditor 
             showChatBox = {this.showChatBox} 
             compileCode = {this.compileCode} 
@@ -288,15 +299,15 @@ class Session extends Component{
             showChatBox = {this.state._showChatBox}
             output = {this.state.output}
           />
-          {
-            this.state.showSessionDetail &&
-              <SessionDetail 
-                saveSessionDetail = {this.saveSessionDetail}
-                toggleSessionDetail = {this.toggleSessionDetail}
-                detail = {this.state.detail}
-              />
-          }
-        </span>
+        </div>
+        {
+          this.state.showSessionDetail &&
+            <SessionDetail 
+              saveSessionDetail = {this.saveSessionDetail}
+              toggleSessionDetail = {this.toggleSessionDetail}
+              detail = {this.state.detail}
+            />
+        }
       </main>
     );
   }

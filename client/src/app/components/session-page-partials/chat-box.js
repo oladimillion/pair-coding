@@ -21,6 +21,9 @@ class ChatBox extends Component {
 
     this.username = undefined; // user's username
     this.isLoaded = false; // first time component will receive props?
+
+    this.maxRows = 5; // max number of rows 
+    this.minRows = 1; // min number of rows
   }
 
   componentWillMount(){
@@ -30,7 +33,7 @@ class ChatBox extends Component {
   }
 
   componentDidMount(){ 
-    this.scrollAreaPadding(1);
+    this.scrollAreaPadding(this.minRows);
     // scroll chat box to the bottom 
     this.scrollToBottom();
     this.username = this.props.user.username;
@@ -69,33 +72,25 @@ class ChatBox extends Component {
     const text = e.target.value;
 
     // setting height of message textarea based on number of new lines
-    const lines = 1 + (text.match(/\n/g) || []).length;
+    const lines = this.minRows + (text.match(/\n/g) || []).length;
 
     this.setState({ 
       textareaValue: text
     });
 
-    if(lines < 5){ 
+    if(lines < this.maxRows){ 
       e.target.rows = lines;
       this.scrollAreaPadding(lines);
     } else { 
-      e.target.rows = 5;
-      this.scrollAreaPadding(5);
+      e.target.rows = this.maxRows;
+      this.scrollAreaPadding(this.maxRows);
     }
   }
 
-  scrollAreaPadding(multiple, fixed = 29){
+  scrollAreaPadding(multiple, fixed = 20){
     let calcPadding = (multiple * fixed);
-    let padding = 45;
-    if(multiple == 1){
-      this.refs.scrollArea.style.paddingBottom = padding + "px";
-    } else  if (multiple == 2){
-      padding = calcPadding + 7;
-      this.refs.scrollArea.style.paddingBottom = padding + "px";
-    } else {
-      padding = calcPadding;
-      this.refs.scrollArea.style.paddingBottom = padding + "px";
-    }
+    // has message-box height increases, shift conversations up
+    this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
   }
 
   scrollToBottom(){ 
@@ -127,9 +122,8 @@ class ChatBox extends Component {
     this.setState({ 
       textareaValue: "",
     })
-    this.refs.message.rows = 1;
-    this.scrollAreaPadding(1);
-
+    this.refs.message.rows = this.minRows;
+    this.scrollAreaPadding(this.minRows);
   }
 
   render(){ 
@@ -146,7 +140,7 @@ class ChatBox extends Component {
       });
 
     return (
-      <div class="chat-box ">
+      <div class="chat-box">
 
         <div 
           class="scroll-area" 
