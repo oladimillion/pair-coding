@@ -41,7 +41,7 @@ function fetchOne(req, res) {
       filteredResult.description = result.description;
       filteredResult.time = result.time;
 
-      return res.status(201).json({
+      return res.status(200).json({
         success: true,
         payload: filteredResult,
         message: "Done!"
@@ -90,7 +90,7 @@ function fetchAll(req, res) {
         return temp;
       });
 
-      return res.status(201).json({
+      return res.status(200).json({
         success: true,
         payload: filteredResult,
         message: "Done!"
@@ -103,8 +103,6 @@ function fetchAll(req, res) {
 function updateSession(req, res) {
 
   const { id, title, description, username, content, time } = req.body;
-
-  const conditions = { id }
 
   Session.findOne({
     id
@@ -133,7 +131,7 @@ function updateSession(req, res) {
           {
             return res.status(201).json({
               success: true,
-              message: "Saved!"
+              message: "Saved!",
             })
           }
         });
@@ -151,7 +149,7 @@ function updateSession(req, res) {
 function updateSessionDetail(req, res) {
 
   const { id, username, title, description } = req.body;
-  
+
   if(!testTitle(title)){
     message= "Title requires 4-20 length of characters"
   }
@@ -159,44 +157,80 @@ function updateSessionDetail(req, res) {
   Session.findOne({
     id
   })
-    .select("username title, description")
+    .select("username title description")
     .exec(function (err, data) {
+      function savedData(){
+        // function to save session detail
+        data.username = username;
+        data.title = title;
+        data.description = description;
+        data.save(function(err) {
+          if(err)
+          {
+            // an error occured
+            return res.status(400).json({
+              success: false,
+              message: "Not Updated!"
+            })
+          } 
+          else
+          {
+            return res.status(201).json({
+              success: true,
+              message: "Updated!"
+            })
+          }
+        });
+      }
+
+
       if (err) 
       {
         throw err;
       } 
-      else if (data) 
-      {
-        // update session for the user, 
-        if(data.username == username){
-          data.username = username;
-          data.title = title;
-          data.description = description;
-          data.save(function(err) {
-            if(err)
-            {
-              // an error occured
-              return res.status(400).json({
-                success: false,
-                message: "Not Updated!"
-              })
-            } 
-            else
-            {
-              return res.status(201).json({
-                success: true,
-                message: "Updated!"
-              })
-            }
-          });
-        } else {
+      else if (data)
+      { 
+        if(data.username == username && data.title != title)
+        {
+          // user has provided a new title
+          //check whether user already has session with this title
+          Session.findOne({
+            username, title
+          })
+            .select("title")
+            .exec(function (err, _data) {
+              if(err) throw err;
+
+              if(_data) {
+                // title already taken from the user
+                return res.status(400).json({
+                  success: false,
+                  message: "Title already taken!"
+                })
+              } else {
+                //update session detail
+                return savedData();
+              }
+            });
+
+        } 
+        else if(data.username == username && data.title == title)
+        {
+          // user has only changed session description
+          // update session detail
+          return savedData();
+        }
+        else 
+        {
           // user trying to update session is not the owner
           return res.status(400).json({
             success: false,
             message: "Not Allowed!"
           })
         } 
-      } else {
+
+      }
+      else {
         // session doesn't exit
         return res.status(400).json({
           success: false,
@@ -215,7 +249,7 @@ function deleteSession(req, res){
     }
 
     if(session){
-      return res.status(201).json({
+      return res.status(200).json({
         success: true,
         message: "Deleted!"
       });

@@ -8,7 +8,7 @@ const Console = (props) =>  {
 };
 
 Console.PropTypes = {
-  output: PropTypes.string.isRequired,
+  // output: PropTypes.string.isRequired,
 }
 
 export default Console;

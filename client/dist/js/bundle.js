@@ -5363,6 +5363,23 @@ var createPath = function createPath(location) {
 /* 38 */
 /***/ (function(module, exports) {
 
+
+function isObjectEmpty(obj){
+
+  if(!obj)
+    return false;
+
+  let filledFiedNum = 0  
+  const values = Object.values(obj);
+
+  values.forEach((value) => {
+    if(!value)
+      filledFiedNum++
+  })
+
+  return filledFiedNum == values.length;
+}
+
 function testTitle(title){
 
   const re = /[\s]?[\w+\W+]{4,20}/;
@@ -5371,8 +5388,6 @@ function testTitle(title){
 
   return true;
 }
-
-
 
 function testEmail(email){
   email = email ? email.trim() : email;
@@ -5422,7 +5437,7 @@ function testPassword(password, cpassword, both = false){
 
 function isValidLoginData(data){
 
-  if(!data){
+  if(isObjectEmpty(data)){
     return "All fields are required!";
   }
 
@@ -5441,7 +5456,7 @@ function isValidLoginData(data){
 
 function isValidRegData(data){
 
-  if(!data){
+  if(isObjectEmpty(data)){
     return "All fields are required!";
   }
 
@@ -5498,7 +5513,7 @@ function isValidResetPwData(email, password, cpassword){
 
 function isValidProfileData(data){
 
-  if(!data){
+  if(isObjectEmpty(data)){
     return "Make sure you provide valid data";
   }
 
@@ -18684,7 +18699,29 @@ function SetPosition(offset, limit, count) {
 }
 
 /***/ }),
-/* 166 */,
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.formatTime = formatTime;
+function formatTime(time) {
+
+  var str = time;
+
+  if (str.indexOf(",") == -1) {
+    var b = str.split(" ");
+    str = [b[0], ", ", b[1], " " + b[2]].join("");
+  }
+
+  return str;
+}
+
+/***/ }),
 /* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18732,7 +18769,7 @@ var _userActions = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import "babel-polyfill";
+// import "babel-polyfill";
 
 var store = (0, _redux.createStore)(_rootReducer2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
@@ -37578,6 +37615,8 @@ var _sessionActions = __webpack_require__(22);
 
 var _editorActions = __webpack_require__(87);
 
+var _sessionUtils = __webpack_require__(166);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37616,6 +37655,7 @@ var Session = function (_Component) {
     _this._ProcessCode = _this._ProcessCode.bind(_this);
 
     _this.showHomeBtn = true;
+    _this.consoleReplaced = false;
     return _this;
   }
 
@@ -37736,9 +37776,6 @@ var Session = function (_Component) {
     value: function compileCode() {
       // compile javascript code from the editor
       // NOTE: es2015 not supported yet...
-      this.setState({
-        _showChatBox: false
-      });
 
       var result = undefined;
       var re = /console.log/gim;
@@ -37746,19 +37783,26 @@ var Session = function (_Component) {
       code = code.replace(re, "alert");
       re = /alert/gim;
       code = code.replace(re, "JSON.stringify");
+      this.setState({
+        _showChatBox: false
+      });
 
       try {
 
         var myInterpreter = new Interpreter(code, this.initConsole);
         myInterpreter.run();
         result = myInterpreter.value;
-
         if (result == undefined) {
           result = "undefined";
         }
+        if (typeof result != "string") result = result.toString();
+        // result = JSON.stringify(result);
       } catch (error) {
         result = error.toString();
       }
+
+      // let code = this.state.content 
+      // let result = this.run(code);
 
       this.setState({ output: result });
     }
@@ -37816,7 +37860,8 @@ var Session = function (_Component) {
       data.username = this.props.user.username;
       data.owner = this.state.owner;
       data.content = this.state.content;
-      data.time = new Date().toLocaleString();
+      var time = new Date().toLocaleString();
+      data.time = (0, _sessionUtils.formatTime)(time);
 
       this.props.SetSessionInfo({
         success: true,
@@ -37873,15 +37918,15 @@ var Session = function (_Component) {
       this.state.detail = { title: title, description: description, id: this.id };
       return _react2.default.createElement(
         "main",
-        null,
+        { className: "session" },
+        _react2.default.createElement(_menuBar2.default, {
+          logout: this.logout,
+          showHomeBtn: this.showHomeBtn,
+          goHome: this.goHome
+        }),
         _react2.default.createElement(
-          "span",
-          null,
-          _react2.default.createElement(_menuBar2.default, {
-            logout: this.logout,
-            showHomeBtn: this.showHomeBtn,
-            goHome: this.goHome
-          }),
+          "div",
+          { className: "divide" },
           _react2.default.createElement(_sessionEditor2.default, {
             showChatBox: this.showChatBox,
             compileCode: this.compileCode,
@@ -37891,13 +37936,13 @@ var Session = function (_Component) {
           _react2.default.createElement(_sessionChat2.default, {
             showChatBox: this.state._showChatBox,
             output: this.state.output
-          }),
-          this.state.showSessionDetail && _react2.default.createElement(_sessionDetail2.default, {
-            saveSessionDetail: this.saveSessionDetail,
-            toggleSessionDetail: this.toggleSessionDetail,
-            detail: this.state.detail
           })
-        )
+        ),
+        this.state.showSessionDetail && _react2.default.createElement(_sessionDetail2.default, {
+          saveSessionDetail: this.saveSessionDetail,
+          toggleSessionDetail: this.toggleSessionDetail,
+          detail: this.state.detail
+        })
       );
     }
   }]);
@@ -42174,7 +42219,10 @@ var Editor = function (_Component) {
       this.left = editorInfo.left;
       this.cursorPos = cursorPos;
 
-      editor.on('keyup', function () {
+      editor.on('keyup', function (cm, event) {
+        if (_this2.keyStroke(event)) {
+          return;
+        }
         // get editor's content
         content = editor.getValue();
         // get editor's scroll position
@@ -42209,6 +42257,15 @@ var Editor = function (_Component) {
     value: function componentWillReceiveProps(newProps) {
       // update editor with props content
       this.setValue(newProps.code);
+    }
+  }, {
+    key: "keyStroke",
+    value: function keyStroke(event) {
+      if (event.key == "Control" || event.key == "Shift" || event.key == "Alt" || event.key == "ArrowDown" || event.key == "ArrowUp" || event.key == "ArrowRight" || event.key == "ArrowLeft" || event.key == "PageUp" || event.key == "PageDown" || event.key == "Home" || event.key == "End" || event.ctrlKey || event.shiftKey || event.altKey) {
+        return true;
+      }
+
+      return false;
     }
   }, {
     key: "setValue",
@@ -42314,8 +42371,8 @@ var SessionChat = function (_Component) {
 }(_react.Component);
 
 SessionChat.propTypes = {
-  showChatBox: _propTypes2.default.bool.isRequired,
-  output: _propTypes2.default.string.isRequired
+  showChatBox: _propTypes2.default.bool.isRequired
+  // output: PropTypes.string.isRequired,
 };
 
 exports.default = SessionChat;
@@ -42374,6 +42431,9 @@ var ChatBox = function (_Component) {
 
     _this.username = undefined; // user's username
     _this.isLoaded = false; // first time component will receive props?
+
+    _this.maxRows = 5; // max number of rows 
+    _this.minRows = 1; // min number of rows
     return _this;
   }
 
@@ -42387,7 +42447,7 @@ var ChatBox = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.scrollAreaPadding(1);
+      this.scrollAreaPadding(this.minRows);
       // scroll chat box to the bottom 
       this.scrollToBottom();
       this.username = this.props.user.username;
@@ -42432,36 +42492,28 @@ var ChatBox = function (_Component) {
       var text = e.target.value;
 
       // setting height of message textarea based on number of new lines
-      var lines = 1 + (text.match(/\n/g) || []).length;
+      var lines = this.minRows + (text.match(/\n/g) || []).length;
 
       this.setState({
         textareaValue: text
       });
 
-      if (lines < 5) {
+      if (lines < this.maxRows) {
         e.target.rows = lines;
         this.scrollAreaPadding(lines);
       } else {
-        e.target.rows = 5;
-        this.scrollAreaPadding(5);
+        e.target.rows = this.maxRows;
+        this.scrollAreaPadding(this.maxRows);
       }
     }
   }, {
     key: "scrollAreaPadding",
     value: function scrollAreaPadding(multiple) {
-      var fixed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 29;
+      var fixed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;
 
       var calcPadding = multiple * fixed;
-      var padding = 45;
-      if (multiple == 1) {
-        this.refs.scrollArea.style.paddingBottom = padding + "px";
-      } else if (multiple == 2) {
-        padding = calcPadding + 7;
-        this.refs.scrollArea.style.paddingBottom = padding + "px";
-      } else {
-        padding = calcPadding;
-        this.refs.scrollArea.style.paddingBottom = padding + "px";
-      }
+      // has message-box height increases, shift conversations up
+      this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
     }
   }, {
     key: "scrollToBottom",
@@ -42495,8 +42547,8 @@ var ChatBox = function (_Component) {
       this.setState({
         textareaValue: ""
       });
-      this.refs.message.rows = 1;
-      this.scrollAreaPadding(1);
+      this.refs.message.rows = this.minRows;
+      this.scrollAreaPadding(this.minRows);
     }
   }, {
     key: "render",
@@ -42526,7 +42578,7 @@ var ChatBox = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "chat-box " },
+        { className: "chat-box" },
         _react2.default.createElement(
           "div",
           {
@@ -42604,7 +42656,7 @@ var Console = function Console(props) {
 };
 
 Console.PropTypes = {
-  output: _propTypes2.default.string.isRequired
+  // output: PropTypes.string.isRequired,
 };
 
 exports.default = Console;
@@ -43421,6 +43473,8 @@ var _shortid2 = _interopRequireDefault(_shortid);
 
 var _sessionActions = __webpack_require__(22);
 
+var _sessionUtils = __webpack_require__(166);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43483,7 +43537,7 @@ var SessionItemsControl = function (_Component) {
 
       var id = _shortid2.default.generate(),
           content = "",
-          time = new Date().toLocaleString();
+          time = (0, _sessionUtils.formatTime)(new Date().toLocaleString());
 
       var title = this.state.createInputValue.trim();
 

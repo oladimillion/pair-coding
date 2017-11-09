@@ -1,9 +1,11 @@
-
-aside.session-editor {
-  width: 59%;
-  margin: auto;
-  float: left;
+main.session div.divide {
+  display: flex;
+  flex-basis: 100%;
   height: calc(83vh + 15px);
+}
+aside.session-editor {
+  width: 60%;
+  height: 100%;
 }
 aside.session-editor div.control {
   width: 100%;
@@ -33,14 +35,11 @@ div.control-btn button:active {
   box-shadow: 5px 5px 5px #999;
 }
 aside.session-chat {
-  height: calc(83vh + 50px);
-  width: 40.9%;
-  margin: auto;
-  float: right;
+  width: 40%;
+  height: calc(83vh + 52px);
   position: relative;
 }
 div.chat-box {
-  position: relative;
   width: 100%;
   height: inherit;
   background: #C2D2DC;
@@ -66,9 +65,10 @@ div.chat-box::after {
 }
 div.chat-box div.scroll-area {
   width: 100%;
-  height: inherit;
   padding: 10px;
   position: relative;
+  max-height: 86vh;
+  box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 1;
@@ -174,15 +174,16 @@ div.chat-box div.chat span.time {
   opacity: 0.5;
 }
 aside div.message-box {
-  position: relative;
+  border: 1px solid black;
+  position: absolute;
+  left: 0;
+  bottom: 0;
   width: 100%;
   height: auto;
-  /* border: 1px solid black; */
-  clear: both;
 }
 div.message-box textarea {
   position: absolute;
-  bottom: -2px;
+  bottom: -1px;
   left: 0;
   width: 100%;
   height: auto;
@@ -238,7 +239,6 @@ aside.session-chat div.console {
   width: 100%;
   height: 100%;
   height: inherit;
-  width: 100%;
   color: #ccc;
   background: #333;
   padding: 20px;
@@ -248,5 +248,11 @@ aside.session-chat div.console {
   font-weight: 500;
   overflow-x: hidden;
   overflow-y: scroll;
+  overflow-wrap: break-word;
   white-space: pre-wrap;
+}
+
+aside.session-chat canvas.console {
+  width: 100%;
+  height: inherit;
 }

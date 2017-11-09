@@ -1,3 +1,20 @@
+
+function isObjectEmpty(obj){
+
+  if(!obj)
+    return false;
+
+  let filledFiedNum = 0  
+  const values = Object.values(obj);
+
+  values.forEach((value) => {
+    if(!value)
+      filledFiedNum++
+  })
+
+  return filledFiedNum == values.length;
+}
+
 function testTitle(title){
 
   const re = /[\s]?[\w+\W+]{4,20}/;
@@ -6,8 +23,6 @@ function testTitle(title){
 
   return true;
 }
-
-
 
 function testEmail(email){
   email = email ? email.trim() : email;
@@ -57,7 +72,7 @@ function testPassword(password, cpassword, both = false){
 
 function isValidLoginData(data){
 
-  if(!data){
+  if(isObjectEmpty(data)){
     return "All fields are required!";
   }
 
@@ -76,7 +91,7 @@ function isValidLoginData(data){
 
 function isValidRegData(data){
 
-  if(!data){
+  if(isObjectEmpty(data)){
     return "All fields are required!";
   }
 
@@ -133,7 +148,7 @@ function isValidResetPwData(email, password, cpassword){
 
 function isValidProfileData(data){
 
-  if(!data){
+  if(isObjectEmpty(data)){
     return "Make sure you provide valid data";
   }
 

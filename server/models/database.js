@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-//connecting to database
 mongoose.Promise = global.Promise;
 
 let URI = null;
@@ -10,7 +9,10 @@ if(process.env.NODE_ENV != "production")
 else
   URI = process.env.SERVER_MONGODB_URI;
 
-mongoose.connect(URI);
+//connecting to database
+mongoose.connect(URI, {
+  useMongoClient: true,
+});
 
 // initialising mongoose connection
 const db = mongoose.connection;

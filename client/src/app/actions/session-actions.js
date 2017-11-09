@@ -118,7 +118,7 @@ export function UpdateSessionRequest(data){
       .then((response) => { 
         // update redux store 
         dispatch(UpdateSession(data))
-        let {  success, message  } = response.data;
+        let { success, message } = response.data;
         // dispatch success message
         dispatch(SetSessionInfo({ message, success }));
         return  response;

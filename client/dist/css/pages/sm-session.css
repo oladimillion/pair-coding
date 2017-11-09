@@ -1,16 +1,14 @@
 /* small devices */
 @media only screen and (max-width: 750px){
-  main {
+  main.session {
     min-height: 30vh;
     height: calc(94vh + 66px);
   }
-  main.home{
-    height: 150vh;
-  }
 }
 @media only screen and (max-width: 599px) {
-  main.home {
-    height: calc(90vh + 66px);
+  main.session div.divide{
+    display: flex;
+    flex-flow: column;
   }
   aside.session-editor {
     width: 100%;
@@ -26,7 +24,7 @@
     position: relative;
   }
   div.chat-box div.scroll-area {
-    padding-bottom: 47px;
+    max-height: 320px;
   }
   div.message-box span.glyphicon {
     top: -2px;
