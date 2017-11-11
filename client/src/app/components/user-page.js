@@ -35,7 +35,7 @@ class User extends Component{
   }
 
   componentDidMount(){
-    document.title = "Pair Coding - Welcome"
+    window.document.title = "Pair Coding - Welcome"
   }
 
   redirect(){
