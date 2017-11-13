@@ -35200,7 +35200,7 @@ var User = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      document.title = "Pair Coding - Welcome";
+      window.document.title = "Pair Coding - Welcome";
     }
   }, {
     key: "redirect",
@@ -37592,8 +37592,6 @@ var _sessionActions = __webpack_require__(22);
 
 var _editorActions = __webpack_require__(87);
 
-var _sessionUtils = __webpack_require__(396);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37657,7 +37655,10 @@ var Session = function (_Component) {
         });
 
         // establishing client connection
-        this.props.ClientConnection({ username: this.props.user.username, sessionId: this.id });
+        this.props.ClientConnection({
+          username: this.props.user.username,
+          sessionId: this.id
+        });
 
         if (content.length == 0) {
           //content not available in redux store
@@ -37725,7 +37726,7 @@ var Session = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      document.title = "Pair Coding - Session";
+      window.document.title = "Pair Coding - Session";
     }
   }, {
     key: "componentWillReceiveProps",
@@ -37837,8 +37838,7 @@ var Session = function (_Component) {
       data.username = this.props.user.username;
       data.owner = this.state.owner;
       data.content = this.state.content;
-      var time = new Date().toLocaleString();
-      data.time = (0, _sessionUtils.formatTime)(time);
+      data.time = Date.now();
 
       this.props.SetSessionInfo({
         success: true,
@@ -37981,6 +37981,8 @@ var _editorActions = __webpack_require__(87);
 
 var _sessionActions = __webpack_require__(22);
 
+var _timeFormat = __webpack_require__(395);
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Client = function () {
@@ -38040,11 +38042,11 @@ var Client = function () {
     key: "onMessage",
     value: function onMessage(data) {
       data = JSON.parse(data);
-      var _data = data,
-          username = _data.username,
-          type = _data.type,
-          message = _data.message,
-          time = _data.time;
+      var _data2 = data,
+          username = _data2.username,
+          type = _data2.type,
+          message = _data2.message,
+          time = _data2.time;
 
       if (type == "self") {
         // message delivered status
@@ -38055,12 +38057,19 @@ var Client = function () {
         return;
       }
 
-      this.dispatch((0, _chatActions.ProcessChat)({ username: username, type: type, message: message, time: time }));
+      var _time = (0, _timeFormat.formatTimeToLocale)(time);
+
+      this.dispatch((0, _chatActions.ProcessChat)({ username: username, type: type, message: message, time: _time }));
     }
   }, {
     key: "onMessages",
     value: function onMessages(data) {
-      this.dispatch((0, _chatActions.ProcessChats)(data));
+      var _data = data.map(function (item) {
+        item.time = (0, _timeFormat.formatTimeToLocale)(item.time);
+        return item;
+      });
+
+      this.dispatch((0, _chatActions.ProcessChats)(_data));
     }
   }, {
     key: "onReconnect",
@@ -38079,6 +38088,7 @@ var Client = function () {
     key: "sendMessage",
     value: function sendMessage(data) {
       this.dispatch((0, _chatActions.ProcessChat)(data));
+      data.time = (0, _timeFormat.formatTimeToGMT)(data.time);
       this.sessionChannel.emit("message", JSON.stringify(data));
     }
   }]);
@@ -42400,6 +42410,7 @@ var ChatBox = function (_Component) {
     _this.sendMessage = _this.sendMessage.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     _this.scrollToBottom = _this.scrollToBottom.bind(_this);
+    _this.localeTime = _this.localeTime.bind(_this);
 
     _this.state = {
       textareaValue: "", // chat textare field
@@ -42490,7 +42501,9 @@ var ChatBox = function (_Component) {
 
       var calcPadding = multiple * fixed;
       // has message-box height increases, shift conversations up
-      this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
+      // this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
+      var declaration = this.refs.scrollArea.style;
+      declaration.setProperty("padding-bottom", calcPadding + "px");
     }
   }, {
     key: "scrollToBottom",
@@ -42509,7 +42522,7 @@ var ChatBox = function (_Component) {
 
       if (!re.test(message)) return;
 
-      var time = new Date().toLocaleTimeString();
+      var time = Date.now();
 
       var data = { username: username, type: "self", message: message, time: time };
 
@@ -42528,8 +42541,14 @@ var ChatBox = function (_Component) {
       this.scrollAreaPadding(this.minRows);
     }
   }, {
+    key: "localeTime",
+    value: function localeTime(time) {
+      return new Date(time).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
 
       var messages = this.state.localChats.map(function (message, index) {
         return _react2.default.createElement(
@@ -42548,7 +42567,7 @@ var ChatBox = function (_Component) {
           _react2.default.createElement(
             "span",
             { className: "time" },
-            message.time
+            _this3.localeTime(message.time)
           )
         );
       });
@@ -42960,8 +42979,6 @@ var _sessionActions = __webpack_require__(22);
 
 var _userActions = __webpack_require__(21);
 
-var _mySort = __webpack_require__(397);
-
 var _menuBar = __webpack_require__(164);
 
 var _menuBar2 = _interopRequireDefault(_menuBar);
@@ -43014,7 +43031,7 @@ var Home = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      document.title = "Pair Coding - Home";
+      window.document.title = "Pair Coding - Home";
 
       var _props = this.props,
           FetchAllSessionRequest = _props.FetchAllSessionRequest,
@@ -43129,6 +43146,13 @@ var Home = function (_Component) {
       });
     }
   }, {
+    key: "mySort",
+    value: function mySort() {
+      return function (cItem, nItem) {
+        return cItem.time > nItem.time ? -1 : cItem.time < nItem.time ? 1 : 0;
+      };
+    }
+  }, {
     key: "next",
     value: function next() {
       // navigates to the next page
@@ -43205,8 +43229,9 @@ var Home = function (_Component) {
     key: "updateFilterSession",
     value: function updateFilterSession(sessions) {
       // shows session items based on offset and limit
-      sessions = sessions.sort((0, _mySort.MySort)());
-      var length = sessions.length;
+      // console.log("sessions: ", sessions);
+      var _sessions = sessions.sort(this.mySort());
+      var length = _sessions.length;
 
       if (length == 0) {
         return;
@@ -43243,7 +43268,7 @@ var Home = function (_Component) {
         this.count = length;
       }
 
-      this.loop(sessions);
+      this.loop(_sessions);
     }
   }, {
     key: "render",
@@ -43372,7 +43397,7 @@ function SessionItems(props) {
       _react2.default.createElement(
         'span',
         { className: 'time' },
-        session.time
+        new Date(session.time).toLocaleString()
       ),
       _react2.default.createElement('span', {
         onClick: function onClick() {
@@ -43428,8 +43453,6 @@ var _shortid = __webpack_require__(81);
 var _shortid2 = _interopRequireDefault(_shortid);
 
 var _sessionActions = __webpack_require__(22);
-
-var _sessionUtils = __webpack_require__(396);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43493,7 +43516,7 @@ var SessionItemsControl = function (_Component) {
 
       var id = _shortid2.default.generate(),
           content = "",
-          time = (0, _sessionUtils.formatTime)(new Date().toLocaleString());
+          time = Date.now();
 
       var title = this.state.createInputValue.trim();
 
@@ -43688,49 +43711,33 @@ var PageNotFound = function PageNotFound() {
 exports.default = PageNotFound;
 
 /***/ }),
-/* 395 */,
-/* 396 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+/* 395 */
+/***/ (function(module, exports) {
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.formatTime = formatTime;
-function formatTime(time) {
-
-  var str = time;
-
-  if (str.indexOf(",") == -1) {
-    var b = str.split(" ");
-    str = [b[0], ", ", b[1], " " + b[2]].join("");
-  }
-
-  return str;
+function formatTimeToGMT(time = Date.now())
+{
+  const timeZone = new Date().getTimezoneOffset();
+  return (time - (timeZone  * 60000));
 }
 
-/***/ }),
-/* 397 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MySort = MySort;
-function getTime(time) {
-  return new Date(time).getTime();
+function formatTimeToLocale(time)
+{
+  const timeZone = new Date().getTimezoneOffset();
+  return (time + (timeZone  * 60000));
 }
 
-function MySort() {
-  return function (cItem, nItem) {
-    return getTime(cItem.time) > getTime(nItem.time) ? -1 : getTime(cItem.time) < getTime(nItem.time) ? 1 : 0;
-  };
+
+module.exports = {
+  formatTimeToGMT,
+  formatTimeToLocale,
 }
+
+
+
+
+        // time: new Date().toLocaleTimeString("en-US", {hour: "numeric", minute: "numeric", hour12: true})
+
 
 /***/ })
 /******/ ]);

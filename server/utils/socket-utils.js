@@ -1,3 +1,4 @@
+const {formatTimeToGMT} = require("./time-format");
 
 class Client 
 {
@@ -11,7 +12,7 @@ class Client
     this.sessionAndMemberList = new Map;
   }
 
-  broadcastMessage(socket, message) 
+  broadcastMessage(socket, message, time) 
   {
     // Broadcast message to every connected peers
     socket.in(socket.sessionId).broadcast.emit("message", 
@@ -19,7 +20,7 @@ class Client
         username: "Server",
         type: "friend",
         message,
-        time: new Date().toLocaleTimeString()
+        time: formatTimeToGMT(),
       }));
   }
 
@@ -35,6 +36,7 @@ class Client
     }
   }
 
+  
   joinSession(connectionData)
   {
     // user joins session
@@ -128,7 +130,7 @@ class Client
       username: "Server",
       type: "friend",
       message: "Welcome " + connectionData.username,
-      time: new Date().toLocaleTimeString()
+      time: formatTimeToGMT(),
     }));
     // notify peers of a members presence
     this.broadcastMessage(socket, connectionData.username + " has joined");

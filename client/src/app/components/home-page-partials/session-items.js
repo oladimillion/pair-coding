@@ -14,7 +14,7 @@ function SessionItems (props) {
           }>
           <span class="title">{ session.title }</span>
         </Link>
-        <span class="time">{ session.time }</span>
+        <span class="time">{ new Date(session.time).toLocaleString() }</span>
         <span 
           onClick={ ()=>props.deleteSession(session.id) }
           class="delete glyphicon glyphicon-remove-circle"></span>

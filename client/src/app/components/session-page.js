@@ -17,8 +17,6 @@ import { AddNewSessionRequest } from "../actions/session-actions";
 import { FetchOneSessionRequest } from "../actions/session-actions";
 import { ProcessCode } from "../actions/editor-actions"
 
-import { formatTime } from "../utils/session-utils"
-
 
 class Session extends Component{
 
@@ -69,7 +67,10 @@ class Session extends Component{
       })
 
       // establishing client connection
-      this.props.ClientConnection({username: this.props.user.username, sessionId: this.id}) 
+      this.props.ClientConnection({
+        username: this.props.user.username, 
+        sessionId: this.id,
+      }) 
 
       if(content.length == 0){
         //content not available in redux store
@@ -132,7 +133,7 @@ class Session extends Component{
   }
 
   componentDidMount(){
-    document.title = "Pair Coding - Session"
+    window.document.title = "Pair Coding - Session"
   }
 
   componentWillReceiveProps(newProps) { 
@@ -174,7 +175,7 @@ class Session extends Component{
       }
       if(typeof result != "string")
         result = result.toString();
-        // result = JSON.stringify(result);
+      // result = JSON.stringify(result);
 
     } catch(error){
       result = error.toString();
@@ -234,8 +235,7 @@ class Session extends Component{
     data.username = this.props.user.username;
     data.owner = this.state.owner;
     data.content = this.state.content; 
-    let time = new Date().toLocaleString();
-    data.time = formatTime(time);
+    data.time = Date.now();
 
     this.props.SetSessionInfo({
       success: true, 

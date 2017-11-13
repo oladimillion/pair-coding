@@ -6,7 +6,7 @@ import { SetPosition } from "../actions/position-actions"
 import { DeleteSessionRequest, SetSessionInfo } from "../actions/session-actions"
 import { FetchAllSessionRequest } from "../actions/session-actions"
 import { SetLoginInfo, Logout } from "../actions/user-actions"
-import { MySort } from "../utils/my-sort";
+
 
 import MenuBar from './common/menu-bar';
 import SessionItems from './home-page-partials/session-items';
@@ -37,7 +37,7 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    document.title = "Pair Coding - Home"
+    window.document.title = "Pair Coding - Home"
 
     let {FetchAllSessionRequest, sessions, position} = this.props;
     // getting initial page/position of session items
@@ -138,6 +138,13 @@ class Home extends Component {
     })
   }
 
+  mySort(){
+    return (cItem, nItem)  => { 
+      return cItem.time > nItem.time ? -1 : 
+        cItem.time < nItem.time ? 1 : 0;
+    }
+  }
+
   next(){
     // navigates to the next page
     let count = this.count;
@@ -212,8 +219,9 @@ class Home extends Component {
 
   updateFilterSession(sessions){
     // shows session items based on offset and limit
-    sessions = sessions.sort(MySort());
-    let length = sessions.length;
+    // console.log("sessions: ", sessions);
+    let _sessions = sessions.sort(this.mySort());
+    let length = _sessions.length;
 
     if(length == 0){
       return;
@@ -251,7 +259,7 @@ class Home extends Component {
       this.count = length;
     }
 
-    this.loop(sessions)
+    this.loop(_sessions)
   }
 
   render() {

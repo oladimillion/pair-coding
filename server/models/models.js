@@ -64,7 +64,7 @@ const SessionSchema = new Schema({
     type: String
   },
   time: {
-    type: String,
+    type: Number,
     required: true
   }
 });
@@ -82,7 +82,7 @@ const PasswordResetSchema = new Schema({
     unique: true
   },
   time: {
-    type: String,
+    type: Number,
     required: true
   }
 });

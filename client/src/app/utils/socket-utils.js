@@ -2,6 +2,8 @@ import { ProcessChat, ClearChat } from "../actions/chat-actions"
 import { ProcessChats } from "../actions/chat-actions"
 import { ProcessCode } from "../actions/editor-actions"
 import { SetSessionInfo } from "../actions/session-actions"
+import { formatTimeToGMT } from "../../../../server/utils/time-format"
+import { formatTimeToLocale } from "../../../../server/utils/time-format"
 
 class Client
 {
@@ -71,12 +73,19 @@ class Client
       return;
     }
 
-    this.dispatch(ProcessChat({ username, type, message, time }));
+    const _time = formatTimeToLocale(time);
+
+    this.dispatch(ProcessChat({ username, type, message, time: _time }));
   }
 
   onMessages(data)
   {
-    this.dispatch(ProcessChats(data));
+    const _data = data.map((item) => {
+      item.time = formatTimeToLocale(item.time);
+      return item;
+    });
+
+    this.dispatch(ProcessChats(_data));
   }
 
   onReconnect()
@@ -95,6 +104,7 @@ class Client
   sendMessage(data)
   {
     this.dispatch(ProcessChat(data));
+    data.time = formatTimeToGMT(data.time);
     this.sessionChannel.emit("message", JSON.stringify(data));
   }
 }

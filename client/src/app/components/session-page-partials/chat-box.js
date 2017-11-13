@@ -13,6 +13,7 @@ class ChatBox extends Component {
     this.sendMessage = this.sendMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.localeTime = this.localeTime.bind(this);
 
     this.state = { 
       textareaValue: "", // chat textare field
@@ -90,7 +91,9 @@ class ChatBox extends Component {
   scrollAreaPadding(multiple, fixed = 20){
     let calcPadding = (multiple * fixed);
     // has message-box height increases, shift conversations up
-    this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
+    // this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
+    const declaration = this.refs.scrollArea.style;
+    declaration.setProperty("padding-bottom",`${calcPadding}px`);
   }
 
   scrollToBottom(){ 
@@ -107,7 +110,7 @@ class ChatBox extends Component {
     if(!re.test(message))
       return;
 
-    let time = new Date().toLocaleTimeString();
+    let time = Date.now();
 
     const data = { username, type: "self", message, time};
 
@@ -126,6 +129,12 @@ class ChatBox extends Component {
     this.scrollAreaPadding(this.minRows);
   }
 
+  localeTime(time)
+  {
+    return new Date(time).toLocaleTimeString("en-US", 
+      {hour: "numeric", minute: "numeric", hour12: true})
+  }
+
   render(){ 
 
     const messages =
@@ -134,7 +143,7 @@ class ChatBox extends Component {
           <div key={ index } class={ "chat " + message.type }>
             <span class="username">{ message.username }</span>
             <span style={ { whiteSpace: "pre-wrap" } }  class="message">{ message.message }</span>
-            <span class="time">{ message.time }</span>
+            <span class="time">{ this.localeTime(message.time) }</span>
           </div>
         )
       });
