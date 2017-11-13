@@ -69,7 +69,7 @@ form a:hover {
   margin-right: 1px;
 }
 .login input {
-  color: #233947;
+  color: #234A89;
   font-size: 13px;
   padding: 4.5px;
   padding-left: 8px;
@@ -81,6 +81,10 @@ form a:hover {
   background: #fff;
 }
 .login input::placeholder {
+  color: #759FBB;
+  letter-spacing: 0.5px;
+}
+.login input::-ms-input-placeholder{
   color: #759FBB;
   letter-spacing: 0.5px;
 }
@@ -170,6 +174,9 @@ form a:hover {
   background: #fff; 
 }
 .pop-up ul.pop-up-detail li input::placeholder, .pop-up ul.pop-up-detail li textarea::placeholder{
+  color: #7EA3BA;
+  letter-spacing: 0.5px;
+}.pop-up ul.pop-up-detail li input::-ms-input-placeholder, .pop-up ul.pop-up-detail li textarea::-ms-input-placeholder{
   color: #7EA3BA;
   letter-spacing: 0.5px;
 }
@@ -300,7 +307,7 @@ form a:hover {
   background-color: cornflowerblue;
 }
 .reg input {
-  color: #233947;
+  color: #234A89;
   width: 300px;
   font-size: 13px;
   padding: 5px;
@@ -312,7 +319,11 @@ form a:hover {
 .reg input:focus {
   background: #fff;
 }
-.reg input::placeholder {
+.reg input::placeholder{
+  color: #759FBB;
+  letter-spacing: 0.5px;
+}
+.reg input::-ms-input-placeholder{
   color: #759FBB;
   letter-spacing: 0.5px;
 }

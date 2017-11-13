@@ -91,7 +91,9 @@ class ChatBox extends Component {
   scrollAreaPadding(multiple, fixed = 20){
     let calcPadding = (multiple * fixed);
     // has message-box height increases, shift conversations up
-    this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
+    // this.refs.scrollArea.style.paddingBottom = calcPadding + "px";
+    const declaration = this.refs.scrollArea.style;
+    declaration.setProperty("padding-bottom",`${calcPadding}px`);
   }
 
   scrollToBottom(){ 
