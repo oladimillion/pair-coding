@@ -254,12 +254,11 @@ aside.session-chat div.console {
   font-size: 17px;
   font-weight: 500;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-wrap: break-word;
-  white-space: pre-wrap;
 }
-
-aside.session-chat canvas.console {
-  width: 100%;
-  height: inherit;
-}
+/*  */
+/* aside.session-chat canvas.console { */
+/*   width: 100%; */
+/*   height: inherit; */
+/* } */

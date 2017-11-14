@@ -92,6 +92,10 @@ class Editor extends Component {
       this.props.ClientSendCode(data);
     });
 
+    editor.on("change", () => {
+      this.props.editorChanged(editor.getValue());
+    })
+
     // editor.setOption("readOnly", "nocursor");
     if(Object.keys(this.props.code).length)
       // update editor with props content

@@ -21,7 +21,7 @@ class SessionChat extends Component {
 
 SessionChat.propTypes = {
   showChatBox: PropTypes.bool.isRequired,
-  // output: PropTypes.string.isRequired,
+  output: PropTypes.array.isRequired,
 }
 
 export default SessionChat;

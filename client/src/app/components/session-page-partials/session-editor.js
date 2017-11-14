@@ -15,7 +15,9 @@ const SessionEditor = (props) => {
         saveSession = { props.saveSession }
         toggleSessionDetail = { props.toggleSessionDetail }
       />
-      <Editor />
+      <Editor 
+        editorChanged = { props.editorChanged }
+      />
     </aside>
   )
 }

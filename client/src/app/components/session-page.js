@@ -16,6 +16,7 @@ import { UpdateSessionRequest } from "../actions/session-actions";
 import { AddNewSessionRequest } from "../actions/session-actions";
 import { FetchOneSessionRequest } from "../actions/session-actions";
 import { ProcessCode } from "../actions/editor-actions"
+import { JsInterpreter } from "../utils/session-utils"
 
 
 class Session extends Component{
@@ -26,7 +27,7 @@ class Session extends Component{
     this.state = {
       _showChatBox: true,
       showSessionDetail: false,
-      output: "",
+      output: [],
       content: "",
       description: "",
       title: "",
@@ -40,13 +41,15 @@ class Session extends Component{
     this.saveSession = this.saveSession.bind(this);
     this.saveSessionDetail = this.saveSessionDetail.bind(this);
     this.toggleSessionDetail = this.toggleSessionDetail.bind(this);
-    this.initConsole = this.initConsole.bind(this);
     this.logout = this.logout.bind(this);
     this.goHome = this.goHome.bind(this);
     this._ProcessCode = this._ProcessCode.bind(this);
+    this.editorChanged = this.editorChanged.bind(this);
 
     this.showHomeBtn = true;
-    this.consoleReplaced = false;
+
+    // initialising javascript interpreter
+    this.Interpreter = new JsInterpreter();
   }
 
   componentWillMount(){
@@ -153,53 +156,25 @@ class Session extends Component{
 
   compileCode(){
     // compile javascript code from the editor
-    // NOTE: es2015 not supported yet...
-
-    let result = undefined;
-    let re = /console.log/gim;
-    let code = this.state.content 
-    code = code.replace(re, "alert");
-    re = /alert/gim;
-    code = code.replace(re, "JSON.stringify")
     this.setState({
       _showChatBox: false
     });
 
-    try{
+    this.Interpreter.assignData(this.state.content)
+    let output = this.Interpreter.run();
 
-      const myInterpreter = new Interpreter(code, this.initConsole);
-      myInterpreter.run();
-      result = myInterpreter.value;
-      if(result == undefined){
-        result = "undefined";
-      }
-      if(typeof result != "string")
-        result = result.toString();
-      // result = JSON.stringify(result);
+    this.setState({output});    
+  }
 
-    } catch(error){
-      result = error.toString();
-    }
-
-    // let code = this.state.content 
-    // let result = this.run(code);
-
-    this.setState({output: result});    
-
-
+  editorChanged(content){
+    this.setState({
+      content,
+    })
   }
 
   goHome() {
     // redirect to home route
     this.props.history.push("/home", null);
-  }
-
-  initConsole(interpreter, scope) {
-    const wrapper = function(text) {
-      return (arguments.length ? text : '');
-    };
-    interpreter.setProperty(scope, 'alert',
-      interpreter.createNativeFunction(wrapper));
   }
 
   logout(){
@@ -294,6 +269,7 @@ class Session extends Component{
             compileCode = {this.compileCode} 
             saveSession = {this.saveSession}
             toggleSessionDetail = {this.toggleSessionDetail}
+            editorChanged = { this.editorChanged }
           />
           <SessionChat 
             showChatBox = {this.state._showChatBox}
