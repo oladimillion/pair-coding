@@ -1,5 +1,6 @@
 // import "babel-polyfill";
 
+
 import React from "react";
 import { render } from "react-dom";
 import { Router, browserHistory } from "react-router";
@@ -22,7 +23,6 @@ if(localStorage.token){
   store.dispatch(SetCurrentUser(jwtDecode(localStorage.token)));
 }
 
-// store.subscribe(()=> console.log(store.getState()));
 
 render( 
   <Root store={store}/>,
