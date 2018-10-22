@@ -12,11 +12,12 @@ function authenticate (req, res, next) {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        res.status(401).json({ 
+        res.status(403).json({
           success: false,
           message: "Please login to access the resource"
         });
       } else {
+        console.log("decoded", decoded);
         next();
       }
     });
